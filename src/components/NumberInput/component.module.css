@@ -1,0 +1,14 @@
+.label {
+  font-size: 0.875rem;
+}
+
+.input {
+  min-width: 32px;
+  text-align: center;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
