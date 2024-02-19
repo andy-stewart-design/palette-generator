@@ -1,4 +1,4 @@
-import Color from "color.js-main";
+import Color from "@andystewartdesign/colorjs.io";
 import SearchInput from "@/components/SearchInput";
 import NumberInput from "@/components/NumberInput";
 import { range } from "@/utlis/arrays";
@@ -25,7 +25,7 @@ export default function Home({ searchParams }: PageProps) {
   const lightnessMax = keyLightnessRounded > 92 ? keyLightnessRounded : 92;
   const lightnessRange = lightnessMax - lightnessMin;
 
-  console.log({ numSteps });
+  // console.log({ numSteps });
 
   let keyIndex: number | undefined;
 

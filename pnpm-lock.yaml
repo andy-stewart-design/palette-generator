@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@andystewartdesign/colorjs.io':
+    specifier: ^0.5.0
+    version: 0.5.0
   colorjs.io:
     specifier: ^0.4.5
     version: 0.4.5
@@ -44,6 +47,12 @@ packages:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /@andystewartdesign/colorjs.io@0.5.0:
+    resolution: {integrity: sha512-MAIHieHctSAgq849p1UnLt8LXGD+36yfnP6oYzO/DQ2WgzqWiNSTFVzQkeP70hQ4Aa9iboVIGWrLh+c1zOXpiw==}
+    dependencies:
+      colorjs.io: 0.4.5
+    dev: false
 
   /@babel/runtime@7.23.9:
     resolution: {integrity: sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==}
