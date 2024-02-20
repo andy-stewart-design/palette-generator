@@ -4,6 +4,7 @@ import NumberInput from "@/components/NumberInput";
 import ColorCard from "@/components/ColorCard";
 import { range } from "@/utlis/arrays";
 import { ServerSideComponentProp } from "@/types/server-components";
+import classes from "./page.module.css";
 
 type PageProps = ServerSideComponentProp<
   {},
@@ -68,12 +69,12 @@ export default function Home({ searchParams }: PageProps) {
   const lightnessValues = [...lowerRange, keyLightness, ...upperRange];
 
   return (
-    <main style={{ display: "grid", gap: "1rem", padding: "2rem" }}>
+    <main className={classes.main}>
       <section style={{ display: "flex", gap: "1rem" }}>
         <SearchInput placeholder={hex} />
         <NumberInput />
       </section>
-      <section style={{ display: "flex", gap: "0.25rem" }}>
+      <section className={classes.grid}>
         {lightnessValues.map((lightness, index) => (
           <ColorCard
             key={idents[index]}

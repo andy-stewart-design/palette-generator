@@ -4,9 +4,13 @@
   place-items: center;
   background-color: var(--background-color);
   flex: 1 0 0;
-  min-height: 160px;
+  min-height: 96px;
   box-sizing: border-box;
   border-radius: 0.75rem;
+
+  @media screen and (width >= 800px) {
+    min-height: 160px;
+  }
 }
 
 .hex {
