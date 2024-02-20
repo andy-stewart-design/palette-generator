@@ -69,7 +69,6 @@ export default function SearchInput({ placeholder }: PageProps) {
           onChange={handleChange}
           className={classes.input}
           placeholder={placeholder.replace("#", "")}
-          pattern="^#(?:[0-9a-fA-F]{3}){1,2}$"
         />
         <button type="submit" className={classes.submit}>
           Submit
