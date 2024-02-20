@@ -6,7 +6,7 @@
   border: 1px solid white;
   box-shadow: var(--box-shadow);
 
-  [data-state]:hover &,
+  :global(.color-card):hover > &,
   &:focus-visible {
     opacity: 1;
   }

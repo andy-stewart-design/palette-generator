@@ -20,12 +20,13 @@ export default function ColorCard({
 }: PageProps) {
   const bgColor = new Color("hsluv", [hue, saturation, lightness]);
   const boxShadow = `0 3px 12px -2px rgba(0 0 0 / ${0.6 / (index + 1) + 0.1})`;
+  const isActive = index === keyIndex;
 
   return (
     <div
       key={lightness}
-      className={classes.card}
-      data-state={index === keyIndex ? "on" : "off"}
+      className={`${classes.card} color-card`}
+      data-state={isActive ? "on" : "off"}
       style={
         {
           "--background-color": bgColor.to("srgb").toString(),
@@ -36,7 +37,7 @@ export default function ColorCard({
       <span className={classes.hex}>
         {bgColor.to("srgb").toString({ format: "hex" })}
       </span>
-      <ColorCardButton index={index} disabled={index === keyIndex} />
+      <ColorCardButton index={index} disabled={isActive} />
     </div>
   );
 }

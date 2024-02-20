@@ -70,10 +70,12 @@ export default function Home({ searchParams }: PageProps) {
 
   return (
     <main className={classes.main}>
-      <section style={{ display: "flex", gap: "1rem" }}>
-        <SearchInput placeholder={hex} />
-        <NumberInput />
-      </section>
+      <header className={classes.header}>
+        <div>
+          <SearchInput placeholder={hex} />
+          <NumberInput />
+        </div>
+      </header>
       <section className={classes.grid}>
         {lightnessValues.map((lightness, index) => (
           <ColorCard

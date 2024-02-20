@@ -8,6 +8,13 @@
   }
 }
 
+.header > div {
+  display: grid;
+  grid-template-columns: 1fr 144px;
+  gap: 1rem;
+  max-width: 480px;
+}
+
 .grid {
   display: flex;
   gap: 0.25rem;
