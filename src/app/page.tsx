@@ -10,6 +10,8 @@ type PageProps = ServerSideComponentProp<
   { color?: string; steps?: string; anchor?: string }
 >;
 
+const idents = range(20).map((i) => crypto.randomUUID());
+
 export default function Home({ searchParams }: PageProps) {
   const colorParam =
     searchParams.color && decodeURIComponent(searchParams.color);
@@ -74,7 +76,7 @@ export default function Home({ searchParams }: PageProps) {
       <section style={{ display: "flex", gap: "0.25rem" }}>
         {lightnessValues.map((lightness, index) => (
           <ColorCard
-            key={index}
+            key={idents[index]}
             hue={keyHue}
             saturation={keySaturation}
             lightness={lightness}
