@@ -1,0 +1,18 @@
+.button {
+  width: 24px;
+  height: 24px;
+  border-radius: 100vmax;
+  opacity: 0;
+  border: 1px solid white;
+  box-shadow: var(--box-shadow);
+
+  [data-state]:hover &,
+  &:focus-visible {
+    opacity: 1;
+  }
+
+  [data-state="on"] & {
+    background: white;
+    opacity: 1;
+  }
+}

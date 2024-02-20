@@ -12,6 +12,9 @@
     "@andystewartdesign/colorjs.io": "^0.5.0",
     "colorjs.io": "^0.4.5",
     "next": "14.1.0",
+    "postcss-import": "^16.0.1",
+    "postcss-nesting": "^12.0.3",
+    "postcss-preset-env": "^9.4.0",
     "react": "^18",
     "react-dom": "^18"
   },

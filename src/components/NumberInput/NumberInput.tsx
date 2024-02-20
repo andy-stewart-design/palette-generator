@@ -27,12 +27,14 @@ export default function NumberInput({}) {
   const increment = () => handleChange(value + 1);
 
   return (
-    <div style={{ display: "grid" }}>
+    <div style={{ display: "grid" }} className={classes.form}>
       <label htmlFor="steps" className={classes.label}>
         Steps
       </label>
-      <div>
-        <button onClick={decrement}>-</button>
+      <div className={classes.container}>
+        <button onClick={decrement} className={classes.button}>
+          -
+        </button>
         <input
           id="steps"
           className={classes.input}
@@ -42,7 +44,9 @@ export default function NumberInput({}) {
           min={3}
           max={20}
         />
-        <button onClick={increment}>+</button>
+        <button onClick={increment} className={classes.button}>
+          +
+        </button>
       </div>
     </div>
   );
