@@ -1,4 +1,3 @@
-import { CSSProperties } from "react";
 import Color from "@andystewartdesign/colorjs.io";
 import ColorCardButton from "./ColorCardButton";
 import classes from "./component.module.css";
@@ -24,15 +23,12 @@ export default function ColorCard({
 
   return (
     <div
-      key={lightness}
       className={`${classes.card} color-card`}
       data-state={isActive ? "on" : "off"}
-      style={
-        {
-          "--background-color": bgColor.to("srgb").toString(),
-          "--box-shadow": boxShadow,
-        } as CSSProperties
-      }
+      style={{
+        "--background-color": bgColor.to("srgb").toString(),
+        "--box-shadow": boxShadow,
+      }}
     >
       <span className={classes.hex}>
         {bgColor.to("srgb").toString({ format: "hex" })}
