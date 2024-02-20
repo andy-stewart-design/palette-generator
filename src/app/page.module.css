@@ -1,7 +1,7 @@
 .main {
   display: grid;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
 
   @media screen and (width >= 800px) {
     padding: 2rem;

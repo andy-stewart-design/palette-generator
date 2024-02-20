@@ -23,6 +23,19 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
       className={classes.button}
       onClick={handleClick}
       disabled={disabled}
-    />
+    >
+      <div>
+        <svg
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <path d="M22 12H16M8 12H2M12 8V2M12 22V16" />
+        </svg>
+      </div>
+    </button>
   );
 }

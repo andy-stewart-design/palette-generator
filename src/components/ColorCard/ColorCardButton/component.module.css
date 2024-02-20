@@ -1,18 +1,30 @@
 .button {
-  width: 24px;
-  height: 24px;
-  border-radius: 100vmax;
-  opacity: 0;
-  border: 1px solid white;
-  box-shadow: var(--box-shadow);
+  width: 32px;
+  height: 32px;
 
-  :global(.color-card):hover > &,
-  &:focus-visible {
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 100vmax;
+    border: 1px solid white;
+    box-shadow: var(--box-shadow);
+
+    color: white;
+    opacity: 0;
+  }
+
+  :global(.color-card):hover > & > div,
+  &:focus-visible > div {
     opacity: 1;
   }
 
-  [data-state="on"] & {
+  [data-state="on"] & > div {
     background: white;
     opacity: 1;
+    color: black;
   }
 }
