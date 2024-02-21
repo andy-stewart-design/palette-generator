@@ -18,7 +18,10 @@ export default function NumberInput({}) {
     if (newValue === 11) searchParams.delete("steps");
     else searchParams.set("steps", newValue.toString());
 
-    console.log(params.toString());
+    const anchor = params.get("anchor");
+    if (anchor && Number(anchor) >= newValue - 1) {
+      searchParams.set("anchor", (newValue - 1).toString());
+    }
 
     router.push(`/?${searchParams}`, { scroll: false });
   }
