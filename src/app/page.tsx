@@ -68,6 +68,12 @@ export default function Home({ searchParams }: PageProps) {
 
   const lightnessValues = [...lowerRange, keyLightness, ...upperRange];
 
+  const colors = lightnessValues.map((lightness) => {
+    const bgColor = new Color("hsluv", [keyHue, keySaturation, lightness]);
+    const hex = bgColor.to("srgb").toString({ format: "hex" });
+    return hex;
+  });
+
   return (
     <main className={classes.main}>
       <header className={classes.header}>
@@ -76,12 +82,7 @@ export default function Home({ searchParams }: PageProps) {
           <NumberInput defaultValue={numSteps} />
         </div>
       </header>
-      <ColorGrid
-        hue={keyHue}
-        saturation={keySaturation}
-        lightnessValues={lightnessValues}
-        keyIndex={keyIndex}
-      />
+      <ColorGrid colors={colors} keyIndex={keyIndex} />
     </main>
   );
 }

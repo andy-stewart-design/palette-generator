@@ -5,30 +5,21 @@ import { AnimatePresence } from "framer-motion";
 import classes from "./component.module.css";
 
 type PropTypes = {
-  hue: number;
-  saturation: number;
-  lightnessValues: number[];
+  colors: Array<string>;
   keyIndex: number;
 };
 
-export default function ColorGrid({
-  hue,
-  saturation,
-  lightnessValues,
-  keyIndex,
-}: PropTypes) {
+export default function ColorGrid({ keyIndex, colors }: PropTypes) {
   return (
     <section className={classes.grid}>
       <AnimatePresence mode={"popLayout"} initial={false}>
-        {lightnessValues.map((lightness, index) => (
+        {colors.map((color, index) => (
           <ColorCard
             key={index}
-            hue={hue}
-            saturation={saturation}
-            lightness={lightness}
+            color={color}
             index={index}
-            keyIndex={keyIndex}
-            numItems={lightnessValues.length}
+            isActive={index === keyIndex}
+            numItems={colors.length}
           />
         ))}
       </AnimatePresence>

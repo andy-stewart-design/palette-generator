@@ -1,31 +1,23 @@
 "use client";
 
-import Color from "@andystewartdesign/colorjs.io";
 import ColorCardButton from "./ColorCardButton";
 import classes from "./component.module.css";
 import { motion, circOut } from "framer-motion";
 
 type PageProps = {
-  hue: number;
-  saturation: number;
-  lightness: number;
+  color: string;
   index: number;
-  keyIndex: number;
+  isActive: boolean;
   numItems: number;
 };
 
 export default function ColorCard({
-  hue,
-  saturation,
-  lightness,
+  color,
   index,
-  keyIndex,
+  isActive,
   numItems,
 }: PageProps) {
-  const bgColor = new Color("hsluv", [hue, saturation, lightness]);
   const boxShadow = `0 3px 12px -2px rgba(0 0 0 / ${0.6 / (index + 1) + 0.1})`;
-  const isActive = index === keyIndex;
-  const hex = bgColor.to("srgb").toString({ format: "hex" });
 
   const cardVariants = {
     visible: {
@@ -60,7 +52,7 @@ export default function ColorCard({
       className={`${classes.card} color-card`}
       data-state={isActive ? "on" : "off"}
       style={{
-        "--background-color": hex,
+        "--background-color": color,
         "--box-shadow": boxShadow,
         zIndex: 10 - index,
       }}
@@ -73,7 +65,7 @@ export default function ColorCard({
         variants={hexVariants}
         className={classes.hex}
       >
-        <span>{hex}</span>
+        <span>{color}</span>
       </motion.div>
       <ColorCardButton index={index} disabled={isActive} />
     </motion.div>
