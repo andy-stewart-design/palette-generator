@@ -4,8 +4,12 @@ import { useState, ChangeEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import classes from "./component.module.css";
 
-export default function NumberInput({}) {
-  const [value, setValue] = useState(11);
+type PropTypes = {
+  defaultValue: number;
+};
+
+export default function NumberInput({ defaultValue }: PropTypes) {
+  const [value, setValue] = useState(defaultValue);
   const router = useRouter();
   const params = useSearchParams();
 

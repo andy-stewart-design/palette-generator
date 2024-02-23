@@ -1,10 +1,10 @@
 import Color from "@andystewartdesign/colorjs.io";
 import SearchInput from "@/components/SearchInput";
 import NumberInput from "@/components/NumberInput";
-import ColorCard from "@/components/ColorCard";
 import { range } from "@/utlis/arrays";
 import { ServerSideComponentProp } from "@/types/server-components";
 import classes from "./page.module.css";
+import ColorGrid from "@/components/ColorGrid";
 
 type PageProps = ServerSideComponentProp<
   {},
@@ -73,21 +73,15 @@ export default function Home({ searchParams }: PageProps) {
       <header className={classes.header}>
         <div>
           <SearchInput placeholder={hex} />
-          <NumberInput />
+          <NumberInput defaultValue={numSteps} />
         </div>
       </header>
-      <section className={classes.grid}>
-        {lightnessValues.map((lightness, index) => (
-          <ColorCard
-            key={idents[index]}
-            hue={keyHue}
-            saturation={keySaturation}
-            lightness={lightness}
-            index={index}
-            keyIndex={keyIndex!}
-          />
-        ))}
-      </section>
+      <ColorGrid
+        hue={keyHue}
+        saturation={keySaturation}
+        lightnessValues={lightnessValues}
+        keyIndex={keyIndex}
+      />
     </main>
   );
 }

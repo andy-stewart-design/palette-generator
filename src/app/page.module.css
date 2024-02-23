@@ -14,13 +14,3 @@
   gap: 1rem;
   max-width: 480px;
 }
-
-.grid {
-  display: flex;
-  gap: 0.25rem;
-  flex-direction: column;
-
-  @media screen and (width >= 800px) {
-    flex-direction: row;
-  }
-}
