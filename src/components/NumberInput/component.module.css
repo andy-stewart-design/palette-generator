@@ -33,15 +33,23 @@
 }
 
 .button {
+  --lightness: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: black;
+  background: oklch(var(--lightness) 0.25 var(--hue));
   color: white;
   border-radius: 100vmax;
+  box-shadow: var(--shadow-elevation-low);
+  z-index: 10;
+  transition: background 200ms ease-out;
 
+  &:hover {
+    --lightness: 60%;
+  }
   /* &:first-of-type {
     border-radius: 4px 0 0 4px;
     border-right: 0;

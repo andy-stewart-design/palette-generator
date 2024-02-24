@@ -75,7 +75,7 @@ export default function Home({ searchParams }: PageProps) {
   });
 
   return (
-    <main className={classes.main}>
+    <main className={classes.main} style={{ "--hue": keyColor.oklch.h }}>
       <header className={classes.header}>
         <div>
           <SearchInput placeholder={hex} />
