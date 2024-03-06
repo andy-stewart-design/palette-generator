@@ -71,4 +71,6 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
   );
 });
 
+ColorCard.displayName = "ColorCard";
+
 export default ColorCard;
