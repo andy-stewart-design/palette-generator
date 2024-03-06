@@ -1,8 +1,9 @@
 "use client";
 
+import { forwardRef } from "react";
+import { motion, circOut } from "framer-motion";
 import ColorCardButton from "./ColorCardButton";
 import classes from "./component.module.css";
-import { motion, circOut } from "framer-motion";
 
 type PageProps = {
   color: string;
@@ -11,25 +12,21 @@ type PageProps = {
   numItems: number;
 };
 
-export default function ColorCard({
-  color,
-  index,
-  isActive,
-  numItems,
-}: PageProps) {
+const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
+  const { color, index, isActive, numItems } = props;
   const boxShadow = `0 3px 12px -2px rgba(0 0 0 / ${0.6 / (index + 1) + 0.1})`;
 
   const cardVariants = {
     visible: {
       opacity: 1,
       flex: "1 0 0",
-      width: "auto",
+      height: "auto",
       transition: { duration: 0.75, type: "spring", when: "beforeChildren" },
     },
     hidden: {
       opacity: 1,
       flex: "0 0 0",
-      width: 0,
+      height: 0,
       transition: { duration: 0.75, type: "spring", when: "beforeChildren" },
     },
   };
@@ -44,8 +41,10 @@ export default function ColorCard({
       transition: { duration: 0, ease: circOut },
     },
   };
+
   return (
     <motion.div
+      ref={ref}
       layout
       exit="hidden"
       variants={cardVariants}
@@ -70,4 +69,6 @@ export default function ColorCard({
       <ColorCardButton index={index} disabled={isActive} />
     </motion.div>
   );
-}
+});
+
+export default ColorCard;

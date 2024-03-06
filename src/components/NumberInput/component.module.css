@@ -40,7 +40,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: oklch(var(--lightness) 0.25 var(--hue));
+  background: var(--button-bg);
   color: white;
   border-radius: 100vmax;
   box-shadow: var(--shadow-elevation-low);

@@ -1,0 +1,20 @@
+.wrapper {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  padding-inline: 0.5rem;
+
+  span {
+    opacity: 0.5;
+    margin-inline-start: 0.25rem;
+  }
+}
+
+.inputs {
+  display: grid;
+  gap: 1rem;
+}

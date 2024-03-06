@@ -1,3 +1,4 @@
 @layer reset, base, component, override;
 
 @import "./base/reset.css" layer(reset);
+@import "./base/shadows.css" layer(base);

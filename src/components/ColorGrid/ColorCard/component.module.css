@@ -30,8 +30,7 @@
   font-weight: 500;
 
   @media screen and (width >= 800px) {
-    top: 1.5rem;
-    left: 50%;
-    translate: -50%;
+    top: 1rem;
+    left: 1rem;
   }
 }
