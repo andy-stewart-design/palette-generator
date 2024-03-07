@@ -53,7 +53,7 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
       style={{
         "--background-color": color,
         "--box-shadow": boxShadow,
-        zIndex: 10 - index,
+        zIndex: 30 - index,
       }}
     >
       <motion.div

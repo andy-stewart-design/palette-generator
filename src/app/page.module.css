@@ -5,6 +5,8 @@
 }
 
 .header {
+  display: flex;
+  flex-direction: column;
   background: white;
   box-shadow: var(--shadow-elevation-2);
   z-index: 100;
@@ -19,4 +21,13 @@
     padding-inline: 1.5rem;
     padding-block: 2rem;
   }
+
+  &:last-of-type {
+    border-top: 1px solid rgb(0 0 0 / 0.1);
+    border-bottom: none;
+  }
+}
+
+.spacer {
+  flex-grow: 1;
 }

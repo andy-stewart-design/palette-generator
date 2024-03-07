@@ -62,14 +62,14 @@ export default function NumberInput({ defaultValue }: PropTypes) {
   }
 
   return (
-    <div style={{ display: "grid" }} className={classes.form}>
+    <div className={classes.form}>
       <label htmlFor="steps" className={classes.label}>
-        Steps
+        Stops
       </label>
       <div className={classes.container}>
         <button onClick={decrement} className={classes.button}>
           <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
-            <path d="M2 8 L14 8" strokeWidth="1.5" stroke="currentColor" />
+            <path d="M3 8 L13 8" strokeWidth="1.25" stroke="currentColor" />
           </svg>
         </button>
         <input
@@ -85,8 +85,8 @@ export default function NumberInput({ defaultValue }: PropTypes) {
         <button onClick={increment} className={classes.button}>
           <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
             <path
-              d="M2 8 L14 8 M8 2 L8 14"
-              strokeWidth="1.5"
+              d="M3 8 L13 8 M8 3 L8 13"
+              strokeWidth="1.25"
               stroke="currentColor"
             />
           </svg>

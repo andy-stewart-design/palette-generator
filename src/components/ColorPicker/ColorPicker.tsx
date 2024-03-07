@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SearchInput from "@/components/SearchInput";
 import HSLInputs from "@/components/HSLInputs";
 import { formatHex, type Color, type Okhsl } from "culori";
 import debounce from "just-debounce-it";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import type { ReadonlyURLSearchParams } from "next/navigation";
 import classes from "./component.module.css";
 
 type PropTypes = {
@@ -20,6 +18,10 @@ type PropTypes = {
 
 export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
   const [currentColor, setCurrentColor] = useState(systemColor);
+
+  useEffect(() => {
+    if (currentColor !== systemColor) setCurrentColor(systemColor);
+  }, [systemColor]);
 
   const params = useSearchParams();
   const router = useRouter();
@@ -38,13 +40,21 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
-      updateURL(hex, router, params);
+      updateURL(hex, params);
     }
   }
 
-  useEffect(() => {
-    if (currentColor !== systemColor) setCurrentColor(systemColor);
-  }, [systemColor]);
+  const updateURL = useMemo(
+    () =>
+      debounce((hex: string, params: URLSearchParams) => {
+        const searchParams = new URLSearchParams(params);
+        console.log(params.forEach((value, key) => console.log(key, value)));
+
+        searchParams.set("color", hex.replace("#", ""));
+        router.push(`/?${searchParams}`, { scroll: false });
+      }, 200),
+    []
+  );
 
   return (
     <div
@@ -56,21 +66,12 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
       </p>
       <div className={classes.inputs}>
         <SearchInput
-          placeholder={currentColor.hex}
+          placeholder={systemColor.hex}
           updateColor={updateColor}
-          key={currentColor.hex}
+          key={systemColor.hex}
         />
         <HSLInputs color={currentColor.raw} updateColor={updateColor} />
       </div>
     </div>
   );
 }
-
-const updateURL = debounce(
-  (hex: string, router: AppRouterInstance, params: ReadonlyURLSearchParams) => {
-    const searchParams = new URLSearchParams(params);
-    searchParams.set("color", hex.replace("#", ""));
-    router.push(`/?${searchParams}`, { scroll: false });
-  },
-  200
-);
