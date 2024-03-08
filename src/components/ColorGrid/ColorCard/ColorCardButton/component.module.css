@@ -17,7 +17,7 @@
     1.001
   );
 
-  width: 32px;
+  min-width: 32px;
   height: 32px;
 
   & > div {
@@ -29,28 +29,31 @@
     height: 100%;
     border-radius: 100vmax;
     border: 1px solid white;
+    padding-inline: 1rem;
     box-shadow: var(--box-shadow);
 
+    font-size: 0.875rem;
+    font-weight: 500;
     color: white;
     opacity: 0;
-    rotate: 180deg;
+    /* scale: 0.5; */
 
-    transition: opacity var(--transition-duration) var(--transition-easing),
+    /* transition: opacity var(--transition-duration) var(--transition-easing),
       background var(--transition-duration) var(--transition-easing),
       color var(--transition-duration) var(--transition-easing),
-      rotate var(--transition-duration) var(--transition-easing);
+      scale var(--transition-duration) var(--transition-easing); */
   }
 
   :global(.color-card):hover > & > div,
   &:focus-visible > div {
     opacity: 1;
-    rotate: 0deg;
+    /* scale: 1; */
   }
 
   [data-state="on"] & > div {
     background: white;
     color: black;
     opacity: 1;
-    rotate: 0deg;
+    /* scale: 1; */
   }
 }

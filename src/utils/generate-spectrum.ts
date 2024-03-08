@@ -1,6 +1,6 @@
 import { formatHex, converter } from "culori";
-import { range } from "@/utlis/arrays";
-import { getColorName } from "@/utlis/get-color-name";
+import { range } from "@/utils/arrays";
+import { getColorName } from "@/utils/get-color-name";
 
 const okhsl = converter("okhsl");
 
@@ -69,6 +69,24 @@ export async function generateSpectrum(
     });
   });
 
+  // CUSTOM PROPS (WILL BE MADE INTO OWN FUNCTION)
+
+  const primaryDesaturated = formatHex({
+    mode: "okhsl",
+    h: keyHue,
+    s: 0,
+    l: keyColor.l,
+  });
+
+  const primaryMedium = formatHex({
+    mode: "okhsl",
+    h: keyHue,
+    s: 0.8,
+    l: 0.6,
+  });
+
+  // ---------------------------------------------
+
   const name = (await getColorName(colors[keyIndex])) as string;
 
   return {
@@ -79,5 +97,9 @@ export async function generateSpectrum(
       name,
     },
     keyIndex,
+    cssVars: {
+      "--color-primary-desaturated": primaryDesaturated,
+      "--color-primary-medium": primaryMedium,
+    },
   };
 }

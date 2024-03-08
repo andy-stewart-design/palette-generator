@@ -13,4 +13,11 @@
   text-align: center;
   font-weight: 500;
   color: var(--color-primary-100);
+
+  transition: scale 100ms ease-out, background 100ms ease-out;
+
+  &:active {
+    scale: 0.95;
+    background: var(--color-primary-darker);
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { generateSVG } from "@/utlis/generate-svg";
+import { generateSVG } from "@/utils/generate-svg";
 import classes from "./component.module.css";
 
 type PropTypes = {

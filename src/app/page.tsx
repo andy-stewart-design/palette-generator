@@ -1,12 +1,10 @@
-// todo: export for figma button
-// todo: style hsl sliders
 // todo: fix keyIndex issue with bright colors
 
 import ColorPicker from "@/components/ColorPicker";
 import ColorGrid from "@/components/ColorGrid";
 import NumberInput from "@/components/NumberInput";
 import ExportButton from "@/components/ExportButton";
-import { generateSpectrum } from "@/utlis/generate-spectrum";
+import { generateSpectrum } from "@/utils/generate-spectrum";
 import type { ServerSideComponentProp } from "@/types/server-components";
 import classes from "./page.module.css";
 
@@ -21,7 +19,7 @@ export default async function Home({ searchParams }: PageProps) {
   const indexParam = searchParams.anchor;
 
   const colorObject = await generateSpectrum(hexParam, stepsParam, indexParam);
-  const { colors, keyColor, keyIndex } = colorObject;
+  const { colors, keyColor, keyIndex, cssVars } = colorObject;
 
   const colorStyles = colors.reduce((acc, color, index) => {
     const key = `--color-primary-${index + 1}00`;
@@ -34,7 +32,9 @@ export default async function Home({ searchParams }: PageProps) {
       className={classes.main}
       style={{
         "--color-primary": colors[keyIndex],
-        "--color-primary-dark": colors[colors.length - 1],
+        "--color-primary-dark": colors.at(-2)!,
+        "--color-primary-darker": colors.at(-1)!,
+        ...cssVars,
         ...colorStyles,
       }}
     >

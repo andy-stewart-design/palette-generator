@@ -47,7 +47,7 @@ export default function HSLInputs({ color, updateColor }: PropTypes) {
         </label>
         <RangeInput
           id="hue"
-          className={classes.input}
+          className={classes.hue}
           value={hue}
           onChange={updateHue}
           min={0}
@@ -61,6 +61,7 @@ export default function HSLInputs({ color, updateColor }: PropTypes) {
           S
         </label>
         <RangeInput
+          className={classes.saturation}
           value={saturation}
           onChange={updateSaturation}
           min={0}
@@ -74,6 +75,7 @@ export default function HSLInputs({ color, updateColor }: PropTypes) {
           L
         </label>
         <RangeInput
+          className={classes.lightness}
           value={ligthness}
           onChange={updateLightness}
           min={0}

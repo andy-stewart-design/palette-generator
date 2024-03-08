@@ -25,7 +25,7 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
       disabled={disabled}
     >
       <div>
-        <svg
+        {/* <svg
           viewBox="0 0 24 24"
           width="24"
           height="24"
@@ -34,7 +34,8 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
           strokeWidth="1.5"
         >
           <path d="M22 12H16M8 12H2M12 8V2M12 22V16" />
-        </svg>
+        </svg> */}
+        {!disabled ? "Update Key Color" : "Key Color"}
       </div>
     </button>
   );

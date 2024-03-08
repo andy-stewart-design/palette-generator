@@ -56,10 +56,28 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     []
   );
 
+  const primaryDesaturated = formatHex({
+    mode: "okhsl",
+    h: currentColor.raw.h ?? 0,
+    s: 0,
+    l: currentColor.raw.l,
+  });
+
+  const primaryMedium = formatHex({
+    mode: "okhsl",
+    h: currentColor.raw.h ?? 0,
+    s: 0.8,
+    l: 0.6,
+  });
+
   return (
     <div
       className={classes.wrapper}
-      style={{ "--color-primary": currentColor.hex }}
+      style={{
+        "--color-primary": currentColor.hex,
+        "--color-primary-desaturated": primaryDesaturated,
+        "--color-primary-medium": primaryMedium,
+      }}
     >
       <p className={classes.label}>
         Key Color <span>{currentColor.name}</span>
