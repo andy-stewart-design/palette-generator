@@ -8,7 +8,7 @@
   background-color: var(--background-color);
   transition: background-color 500ms ease-out;
 
-  @media screen and (width >= 800px) {
+  @media screen and (width >=800px) {
     flex-basis: 0;
   }
 }
@@ -22,14 +22,13 @@
   padding-block: 0.25rem;
   box-shadow: var(--box-shadow);
   border: 1px solid rgb(255 255 255 / 0.25);
-  border-radius: 4px;
 
   color: white;
   font-family: monospace;
   font-size: 0.75rem;
   font-weight: 500;
 
-  @media screen and (width >= 800px) {
+  @media screen and (width >=800px) {
     top: 1rem;
     left: 1rem;
   }

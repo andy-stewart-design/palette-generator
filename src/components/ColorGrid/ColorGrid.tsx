@@ -1,7 +1,5 @@
-"use client";
-
 import ColorCard from "./ColorCard";
-import { AnimatePresence } from "framer-motion";
+import AnimatePresence from "@/components/AnimatePresence";
 import classes from "./component.module.css";
 
 type PropTypes = {

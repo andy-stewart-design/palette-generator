@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 import classes from "./component.module.css";
+import { useId } from "react";
 
 type PageProps = {
   index: number;
@@ -19,24 +21,16 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
   }
 
   return (
-    <button
+    <motion.button
+      layout="position"
       className={classes.button}
       onClick={handleClick}
       disabled={disabled}
+      initial={{ width: 'auto' }}
     >
       <div>
-        {/* <svg
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M22 12H16M8 12H2M12 8V2M12 22V16" />
-        </svg> */}
-        {!disabled ? "Update Key Color" : "Key Color"}
+        {!disabled ? "Set Key" : "Key Color"}
       </div>
-    </button>
+    </motion.button>
   );
 }

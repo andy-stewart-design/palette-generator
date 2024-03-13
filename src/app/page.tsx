@@ -1,4 +1,17 @@
-// todo: fix keyIndex issue with bright colors
+// TODO: Add more granular key color selection support
+// - Add ability to set key color
+// - Add ability to lock and unlock key color
+// - Add key color controls to sidebar
+// -Note: I will likely need to keep track of `automatedKeyColor`, `currentKeyColor`, and `keyColorisLocked`
+
+// TODO: Update export options
+// - Add modal to handle export options
+// - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
+// - For CSS/TW, add ability to select color mode
+
+// TODO: Add color accessibility grid
+// TODO: Improve performance of saturated yellow hues
+// TODO: Add ability to do color palettes as well as color spectra
 
 import ColorPicker from "@/components/ColorPicker";
 import ColorGrid from "@/components/ColorGrid";

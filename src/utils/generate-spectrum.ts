@@ -40,9 +40,7 @@ export async function generateSpectrum(
     });
   }
 
-  if (keyIndex === undefined) {
-    throw new Error("Key index not found");
-  }
+  if (keyIndex === undefined) keyIndex = 0;
 
   const numStepsBeforeKey = keyIndex;
   const lowerRange = range(numStepsBeforeKey).map((index) => {
