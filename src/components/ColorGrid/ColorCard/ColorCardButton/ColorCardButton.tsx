@@ -16,21 +16,38 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
 
   function handleClick() {
     const searchParams = new URLSearchParams(params);
-    searchParams.set("anchor", index.toString());
+    searchParams.set("keyIndex", index.toString());
     router.push(`/?${searchParams}`, { scroll: false });
   }
 
   return (
-    <motion.button
-      layout="position"
-      className={classes.button}
-      onClick={handleClick}
-      disabled={disabled}
-      initial={{ width: 'auto' }}
-    >
-      <div>
-        {!disabled ? "Set Key" : "Key Color"}
-      </div>
-    </motion.button>
+    <>
+      {disabled && (
+        <motion.button
+          layoutId="key-index-button"
+          id="key-index-button"
+          className={classes.button}
+          onClick={handleClick}
+          disabled={disabled}
+          initial={{ width: 'auto' }}
+        >
+          <div>
+            Key Color
+          </div>
+        </motion.button>
+      )}
+      {!disabled && (
+        <motion.button
+          className={classes.button}
+          onClick={handleClick}
+          disabled={disabled}
+          initial={{ width: 'auto' }}
+        >
+          <div>
+            Set Key
+          </div>
+        </motion.button>
+      )}
+    </>
   );
 }

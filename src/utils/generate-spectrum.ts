@@ -5,51 +5,38 @@ import { getColorName } from "@/utils/get-color-name";
 const okhsl = converter("okhsl");
 
 export async function generateSpectrum(
-  hex: string,
-  steps: number,
-  anchor: string | undefined
+  hexParam: string,
+  stepsParam: number,
+  keyIndexParam: string | undefined
 ) {
-  const keyColor = okhsl(hex);
+  const keyColor = okhsl(hexParam);
   if (!keyColor) throw new Error("Invalid color");
 
   const keyHue = keyColor.h ?? 0;
   const keySaturation = keyColor.s;
   const keyLightness = keyColor.l;
 
-  const numSteps = steps ? steps : 11;
+  const numSteps = stepsParam ? stepsParam : 11;
   const lightnessDark = keyLightness < 0.12 ? keyLightness : 0.12;
   const lightnessBright = keyLightness > 0.94 ? keyLightness : 0.94;
   const lightnessRange = lightnessBright - lightnessDark;
 
-  let keyIndex = anchor ? parseInt(anchor) : undefined;
+  const keyIndexGenerated = generateKeyIndex({
+    keyValue: keyLightness,
+    min: lightnessDark,
+    spread: lightnessRange,
+    steps: numSteps,
+  })
+  const keyIndexCurrent = keyIndexParam ? parseInt(keyIndexParam) : keyIndexGenerated;
 
-  if (keyIndex === undefined) {
-    const stepArray = range(numSteps).reverse();
-
-    const lightnessRanges = stepArray.map((index) => {
-      const spread = lightnessRange / numSteps;
-      const lower = index * spread + lightnessDark;
-      const upper = (index + 1) * spread + lightnessDark;
-      return [upper, lower];
-    });
-
-    lightnessRanges.forEach(([upper, lower], index) => {
-      if (keyLightness >= lower && keyLightness <= upper) {
-        keyIndex = index;
-      }
-    });
-  }
-
-  if (keyIndex === undefined) keyIndex = 0;
-
-  const numStepsBeforeKey = keyIndex;
+  const numStepsBeforeKey = keyIndexCurrent;
   const lowerRange = range(numStepsBeforeKey).map((index) => {
     const differential = lightnessBright - keyLightness;
     const step = differential / numStepsBeforeKey;
     return lightnessBright - index * step;
   });
 
-  const numStepsAfterKey = numSteps - keyIndex - 1;
+  const numStepsAfterKey = numSteps - keyIndexCurrent - 1;
   const upperRange = range(numStepsAfterKey).map((index) => {
     const differential = keyLightness - lightnessDark;
     const step = differential / numStepsAfterKey;
@@ -85,19 +72,52 @@ export async function generateSpectrum(
 
   // ---------------------------------------------
 
-  const name = (await getColorName(colors[keyIndex])) as string;
+  const name = (await getColorName(colors[keyIndexCurrent])) as string;
 
   return {
     colors,
     keyColor: {
-      hex,
+      hex: hexParam,
       raw: keyColor,
       name,
     },
-    keyIndex,
+    keyIndex: {
+      current: keyIndexCurrent,
+      generated: keyIndexGenerated,
+    },
     cssVars: {
       "--color-primary-desaturated": primaryDesaturated,
       "--color-primary-medium": primaryMedium,
     },
   };
+}
+
+// HELPER FUNCTIONS
+interface GenerateKeyIndexProps {
+  steps: number;
+  spread: number;
+  min: number;
+  keyValue: number;
+}
+
+function generateKeyIndex(props: GenerateKeyIndexProps) {
+  let keyIndex: number | undefined;
+
+  const stepArray = range(props.steps).reverse();
+
+  const lightnessRanges = stepArray.map((index) => {
+    const spread = props.spread / props.steps;
+    const lower = index * spread + props.min;
+    const upper = (index + 1) * spread + props.min;
+    return [upper, lower];
+  });
+
+  lightnessRanges.forEach(([upper, lower], index) => {
+    if (props.keyValue >= lower && props.keyValue <= upper) {
+      keyIndex = index;
+    }
+  });
+
+  if (keyIndex === undefined) keyIndex = 0;
+  return keyIndex;
 }

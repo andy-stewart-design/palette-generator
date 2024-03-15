@@ -1,31 +1,32 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, ComponentProps } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import classes from "./component.module.css";
 
 type PropTypes = {
   defaultValue: number;
-};
+  min: number;
+  max: number;
+  param: string;
+} & ComponentProps<"input">;
 
-export default function NumberInput({ defaultValue }: PropTypes) {
+export default function NumberInput({ defaultValue, min, max, param, ...delegated }: PropTypes) {
   const [value, setValue] = useState(defaultValue);
   const router = useRouter();
   const params = useSearchParams();
-  const max = 20;
-  const min = 3;
 
   function commitChange(value: string | number) {
     const newValue = typeof value === "string" ? parseInt(value) : value;
     const searchParams = new URLSearchParams(params);
 
-    if (newValue === 11) searchParams.delete("steps");
-    else searchParams.set("steps", newValue.toString());
+    if (newValue === 11) searchParams.delete(param);
+    else searchParams.set(param, newValue.toString());
 
-    const anchor = params.get("anchor");
-    if (anchor && parseInt(anchor) >= newValue - 1) {
-      searchParams.set("anchor", (newValue - 1).toString());
-    }
+    // const keyIndex = params.get("keyIndex");
+    // if (keyIndex && parseInt(keyIndex) >= newValue - 1) {
+    //   searchParams.set("keyIndex", (newValue - 1).toString());
+    // }
 
     router.push(`/?${searchParams}`, { scroll: false });
   }
@@ -62,36 +63,31 @@ export default function NumberInput({ defaultValue }: PropTypes) {
   }
 
   return (
-    <div className={classes.form}>
-      <label htmlFor="steps" className={classes.label}>
-        Stops
-      </label>
-      <div className={classes.container}>
-        <button onClick={decrement} className={classes.button}>
-          <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
-            <path d="M3 8 L13 8" strokeWidth="1.25" stroke="currentColor" />
-          </svg>
-        </button>
-        <input
-          id="steps"
-          className={classes.input}
-          type="number"
-          value={value}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          min={min}
-          max={max}
-        />
-        <button onClick={increment} className={classes.button}>
-          <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
-            <path
-              d="M3 8 L13 8 M8 3 L8 13"
-              strokeWidth="1.25"
-              stroke="currentColor"
-            />
-          </svg>
-        </button>
-      </div>
+    <div className={classes.container}>
+      <button onClick={decrement} className={classes.button}>
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+          <path d="M3 8 L13 8" strokeWidth="1.25" stroke="currentColor" />
+        </svg>
+      </button>
+      <input
+        {...delegated}
+        type="number"
+        className={classes.input}
+        value={value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        min={min}
+        max={max}
+      />
+      <button onClick={increment} className={classes.button}>
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+          <path
+            d="M3 8 L13 8 M8 3 L8 13"
+            strokeWidth="1.25"
+            stroke="currentColor"
+          />
+        </svg>
+      </button>
     </div>
   );
 }

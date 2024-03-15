@@ -13,9 +13,11 @@
 // TODO: Improve performance of saturated yellow hues
 // TODO: Add ability to do color palettes as well as color spectra
 
+import Providers from "@/components/Providers";
 import ColorPicker from "@/components/ColorPicker";
 import ColorGrid from "@/components/ColorGrid";
-import NumberInput from "@/components/NumberInput";
+import KeyIndexController from "@/components/ControlPanel/KeyIndexController";
+import StepsController from "@/components/ControlPanel/StepsController";
 import ExportButton from "@/components/ExportButton";
 import { generateSpectrum } from "@/utils/generate-spectrum";
 import type { ServerSideComponentProp } from "@/types/server-components";
@@ -23,13 +25,13 @@ import classes from "./page.module.css";
 
 type PageProps = ServerSideComponentProp<
   {},
-  { color?: string; steps?: string; anchor?: string }
+  { color?: string; steps?: string; keyIndex?: string }
 >;
 
 export default async function Home({ searchParams }: PageProps) {
   const hexParam = searchParams.color ? `#${searchParams.color}` : "#4aa5b7";
   const stepsParam = searchParams.steps ? Number(searchParams.steps) : 11;
-  const indexParam = searchParams.anchor;
+  const indexParam = searchParams.keyIndex;
 
   const colorObject = await generateSpectrum(hexParam, stepsParam, indexParam);
   const { colors, keyColor, keyIndex, cssVars } = colorObject;
@@ -41,29 +43,34 @@ export default async function Home({ searchParams }: PageProps) {
   }, {});
 
   return (
-    <main
-      className={classes.main}
-      style={{
-        "--color-primary": colors[keyIndex],
-        "--color-primary-dark": colors.at(-2)!,
-        "--color-primary-darker": colors.at(-1)!,
-        ...cssVars,
-        ...colorStyles,
-      }}
-    >
-      <header className={classes.header}>
-        <section className={classes.section}>
-          <ColorPicker currentColor={keyColor} />
-        </section>
-        <section className={classes.section}>
-          <NumberInput defaultValue={stepsParam} />
-        </section>
-        <div className={classes.spacer} />
-        <section className={classes.section}>
-          <ExportButton colors={colors} />
-        </section>
-      </header>
-      <ColorGrid colors={colors} keyIndex={keyIndex} />
-    </main>
+    <Providers>
+      <main
+        className={classes.main}
+        style={{
+          "--color-primary": colors[keyIndex.current],
+          "--color-primary-dark": colors.at(-2)!,
+          "--color-primary-darker": colors.at(-1)!,
+          ...cssVars,
+          ...colorStyles,
+        }}
+      >
+        <header className={classes.header}>
+          <section className={classes.section}>
+            <ColorPicker currentColor={keyColor} />
+          </section>
+          <section className={classes.section}>
+            <StepsController defaultValue={stepsParam} />
+          </section>
+          <section className={classes.section}>
+            <KeyIndexController {...keyIndex} max={stepsParam} key={keyIndex.current} />
+          </section>
+          <div className={classes.spacer} />
+          <section className={classes.section}>
+            <ExportButton colors={colors} />
+          </section>
+        </header>
+        <ColorGrid colors={colors} keyIndex={keyIndex.current} />
+      </main>
+    </Providers>
   );
 }

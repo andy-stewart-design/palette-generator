@@ -1,0 +1,12 @@
+.labelWrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.button {
+    opacity: 0.4;
+
+    &:disabled {
+        opacity: 0;
+    }
+}

@@ -33,7 +33,7 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
       if (color !== "") searchParams.set("color", color);
       else searchParams.delete("color");
 
-      searchParams.delete("anchor");
+      searchParams.delete("keyIndex");
       router.push(`/?${searchParams}`, { scroll: false });
     } else {
       const raw: Color = { mode: "okhsl", h: color.h, s: color.s, l: color.l };
