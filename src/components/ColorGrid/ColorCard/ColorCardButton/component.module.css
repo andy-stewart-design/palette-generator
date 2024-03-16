@@ -9,17 +9,20 @@
   font-size: 0.875rem;
   font-weight: 500;
   text-align: center;
+}
+
+.primary {
+  background: white;
+  color: black;
+}
+
+.secondary {
   color: white;
   opacity: 0;
+  transition: opacity 150ms ease-out;
 
   :global(.color-card):hover>&,
   &:focus-visible {
-    opacity: 1;
-  }
-
-  [data-state="on"] & {
-    background: white;
-    color: black;
     opacity: 1;
   }
 }

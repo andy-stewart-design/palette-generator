@@ -1,35 +1,17 @@
 "use client";
 
 import { useState, ChangeEvent, ComponentProps } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import classes from "./component.module.css";
 
 type PropTypes = {
   defaultValue: number;
   min: number;
   max: number;
-  param: string;
+  pushRouter: (value: string | number) => void;
 } & ComponentProps<"input">;
 
-export default function NumberInput({ defaultValue, min, max, param, ...delegated }: PropTypes) {
+export default function NumberInput({ defaultValue, min, max, pushRouter, ...delegated }: PropTypes) {
   const [value, setValue] = useState(defaultValue);
-  const router = useRouter();
-  const params = useSearchParams();
-
-  function commitChange(value: string | number) {
-    const newValue = typeof value === "string" ? parseInt(value) : value;
-    const searchParams = new URLSearchParams(params);
-
-    if (newValue === 11) searchParams.delete(param);
-    else searchParams.set(param, newValue.toString());
-
-    // const keyIndex = params.get("keyIndex");
-    // if (keyIndex && parseInt(keyIndex) >= newValue - 1) {
-    //   searchParams.set("keyIndex", (newValue - 1).toString());
-    // }
-
-    router.push(`/?${searchParams}`, { scroll: false });
-  }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setValue(parseInt(e.target.value));
@@ -46,20 +28,20 @@ export default function NumberInput({ defaultValue, min, max, param, ...delegate
       e.preventDefault();
       const newValue = value >= max ? max : value <= min ? min : value;
       setValue(newValue);
-      commitChange(newValue);
+      pushRouter(newValue);
     }
   }
 
   function decrement() {
     const newValue = value - 1 <= min ? min : value - 1;
     setValue(newValue);
-    commitChange(newValue);
+    pushRouter(newValue);
   }
 
   function increment() {
     const newValue = value + 1 >= max ? max : value + 1;
     setValue(newValue);
-    commitChange(newValue);
+    pushRouter(newValue);
   }
 
   return (

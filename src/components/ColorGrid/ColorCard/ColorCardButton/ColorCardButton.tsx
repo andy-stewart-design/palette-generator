@@ -26,7 +26,7 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
         <motion.button
           layoutId="key-index-button"
           id="key-index-button"
-          className={classes.button}
+          className={`${classes.button} ${classes.primary}`}
           onClick={handleClick}
           disabled={disabled}
           initial={{ width: 'auto' }}
@@ -38,7 +38,7 @@ export default function ColorCardButton({ index, disabled }: PageProps) {
       )}
       {!disabled && (
         <motion.button
-          className={classes.button}
+          className={`${classes.button} ${classes.secondary}`}
           onClick={handleClick}
           disabled={disabled}
           initial={{ width: 'auto' }}
