@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import ControllerWrapper from "../ControllerWrapper";
 import Label from "@/components/Label";
 import NumberInput from "@/components/NumberInput";
+import { useKeyColorContext } from "@/components/Providers";
 import classes from "./component.module.css";
 
 type PropTypes = {
@@ -13,24 +13,9 @@ type PropTypes = {
 }
 
 export default function KeyIndexController({ current, generated }: PropTypes) {
-    const router = useRouter();
-    const params = useSearchParams();
+    const { updateKeyIndex } = useKeyColorContext();
 
-    function resetIndex() {
-        const searchParams = new URLSearchParams(params);
-        searchParams.delete("keyIndex");
-        router.push(`/?${searchParams}`, { scroll: false });
-    }
-
-    function pushRouter(value: string | number) {
-        const newValue = typeof value === "string" ? parseInt(value) : value;
-        const searchParams = new URLSearchParams(params);
-
-        if (newValue === generated) searchParams.delete("keyIndex");
-        else searchParams.set("keyIndex", newValue.toString());
-
-        router.push(`/?${searchParams}`, { scroll: false });
-    }
+    const resetIndex = () => updateKeyIndex(-1);
 
     return (
         <ControllerWrapper>
@@ -42,7 +27,7 @@ export default function KeyIndexController({ current, generated }: PropTypes) {
                     </button >
                 </Label>
             </div>
-            <NumberInput id="key-index" pushRouter={pushRouter} defaultValue={current} min={0} max={19} />
+            <NumberInput id="key-index" pushRouter={updateKeyIndex} defaultValue={current} min={0} max={19} />
         </ControllerWrapper>
     )
 }

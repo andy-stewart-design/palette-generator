@@ -1,51 +1,45 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { Locked, Unlocked } from "@/components/icons/16";
+import { useKeyColorContext } from "@/components/Providers";
 import classes from "./component.module.css";
-import { useId } from "react";
 
 type PageProps = {
   index: number;
-  disabled: boolean;
+  keyIndex: {
+    current: number;
+    generated: number;
+  };
+  isActive: boolean;
 };
 
-export default function ColorCardButton({ index, disabled }: PageProps) {
-  const router = useRouter();
-  const params = useSearchParams();
+export default function ColorCardButton({ index, isActive }: PageProps) {
+  const { updateKeyIndex, isLocked, toggleIsLocked } = useKeyColorContext();
 
-  function handleClick() {
-    const searchParams = new URLSearchParams(params);
-    searchParams.set("keyIndex", index.toString());
-    router.push(`/?${searchParams}`, { scroll: false });
-  }
+  const setKeyColor = () => updateKeyIndex(index);
 
   return (
     <>
-      {disabled && (
+      {isActive && (
         <motion.button
           layoutId="key-index-button"
-          id="key-index-button"
           className={`${classes.button} ${classes.primary}`}
-          onClick={handleClick}
-          disabled={disabled}
-          initial={{ width: 'auto' }}
+          onClick={toggleIsLocked}
+          data-locked={isLocked ? 'true' : 'false'}
         >
-          <div>
-            Key Color
-          </div>
+          <span>
+            {isLocked ? <Locked /> : <Unlocked />}
+          </span>
+          Key Color
         </motion.button>
       )}
-      {!disabled && (
+      {!isActive && !isLocked && (
         <motion.button
           className={`${classes.button} ${classes.secondary}`}
-          onClick={handleClick}
-          disabled={disabled}
-          initial={{ width: 'auto' }}
+          onClick={setKeyColor}
         >
-          <div>
-            Set Key
-          </div>
+          Set Key
         </motion.button>
       )}
     </>

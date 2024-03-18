@@ -3,18 +3,20 @@
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import ColorCardButton from "./ColorCardButton";
+import { useKeyColorContext } from "@/components/Providers";
 import classes from "./component.module.css";
 
 type PageProps = {
   color: string;
   index: number;
-  isActive: boolean;
   numItems: number;
 };
 
 const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
-  const { color, index, isActive, numItems } = props;
-  const boxShadow = `0 3px 12px -2px rgba(0 0 0 / ${0.6 / (index + 1) + 0.1})`;
+  const { color, index, numItems } = props;
+  const { keyIndex } = useKeyColorContext();
+  const isActive = index === keyIndex.current;
+  const boxShadow = `0 3px 8px -2px rgba(0 0 0 / ${(index + 1) * 0.025 + 0.15})`;
 
   return (
     <motion.div
@@ -31,12 +33,12 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
     >
       <motion.div
         key={numItems}
-        layout={true}
+        layout="position"
         className={classes.hex}
       >
         <span>{color}</span>
       </motion.div>
-      <ColorCardButton index={index} disabled={isActive} />
+      <ColorCardButton index={index} keyIndex={keyIndex} isActive={isActive} />
     </motion.div>
   );
 });

@@ -1,9 +1,7 @@
 .button {
-  min-width: 104px;
   height: 32px;
   border: 1px solid white;
   border-radius: 100vmax;
-  padding-inline: 1rem;
   box-shadow: var(--box-shadow);
 
   font-size: 0.875rem;
@@ -12,11 +10,35 @@
 }
 
 .primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   background: white;
-  color: black;
+  color: var(--color-primary-dark);
+  padding-inline-start: 0.125rem;
+  padding-inline-end: 1rem;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    background: lightgray;
+    border-radius: 100vmax;
+    transition: background 100ms ease-out, color 100ms ease-out;
+  }
+
+  &[data-locked="true"] {
+    span {
+      color: white;
+      background: var(--color-primary-dark);
+    }
+  }
 }
 
 .secondary {
+  padding-inline: 1rem;
   color: white;
   opacity: 0;
   transition: opacity 150ms ease-out;

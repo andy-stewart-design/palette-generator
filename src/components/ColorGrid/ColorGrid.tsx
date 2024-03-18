@@ -4,10 +4,9 @@ import classes from "./component.module.css";
 
 type PropTypes = {
   colors: Array<string>;
-  keyIndex: number;
 };
 
-export default function ColorGrid({ keyIndex, colors }: PropTypes) {
+export default function ColorGrid({ colors }: PropTypes) {
   return (
     <section className={classes.grid}>
       <AnimatePresence mode={"popLayout"} initial={false}>
@@ -16,7 +15,6 @@ export default function ColorGrid({ keyIndex, colors }: PropTypes) {
             key={index}
             color={color}
             index={index}
-            isActive={index === keyIndex}
             numItems={colors.length}
           />
         ))}

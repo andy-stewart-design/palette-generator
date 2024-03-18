@@ -1,44 +1,88 @@
 "use client";
 
-import { ComponentProps, createContext, useContext, useState } from 'react';
+import { createContext, useContext, useOptimistic, useTransition, type ReactNode } from 'react';
+import { useRouter, useSearchParams } from "next/navigation";
 
-// Define the type for the context state
-interface KeyColorContextType {
-    keyColorIsLocked: boolean;
-    toggleKeyColorLock: (newValue?: boolean) => void;
-    // keyColorGenerated: number;
-    // setKeyColorGenerated: (value: number) => void;
+type PropTypes = {
+    keyIndex: {
+        current: number
+        generated: number
+    }
+    children: ReactNode
 }
 
-// Create the context
+type KeyColorContextType = {
+    isLocked: boolean;
+    toggleIsLocked: () => void;
+    keyIndex: {
+        current: number
+        generated: number
+    }
+    updateKeyIndex: (value: string | number) => void;
+}
+
 const KeyColorContext = createContext<KeyColorContextType | undefined>(undefined);
 
-// Create the context provider component
-export default function KeyColorProvider({ children }: ComponentProps<'div'>) {
-    const [keyColorIsLocked, setKeyColorIsLocked] = useState(false);
-    // const [keyColorGenerated, setKeyColorGenerated] = useState(-1);
+export default function KeyColorProvider({ keyIndex: keyIndexParam, children }: PropTypes) {
+    const router = useRouter();
+    const params = useSearchParams();
+    const keyIsLocked = params.get('lockKey') ? true : false;
 
-    // Function to toggle the lock state
-    const toggleKeyColorLock = (newValue?: boolean) => {
-        if (newValue !== undefined) {
-            setKeyColorIsLocked(newValue);
+    const [_, startTransition] = useTransition();
+    const [isLocked, setIsLocked] = useOptimistic(keyIsLocked);
+    const [keyIndex, setKeyIndex] = useOptimistic(keyIndexParam);
+
+    function toggleIsLocked() {
+        const searchParams = new URLSearchParams(params);
+
+        if (isLocked) {
+            searchParams.delete("lockKey");
+
+            if (keyIndex.current === keyIndex.generated) {
+                searchParams.delete("keyIndex");
+            }
         } else {
-            setKeyColorIsLocked(currentValue => !currentValue);
+            searchParams.set("keyIndex", keyIndex.current.toString());
+            searchParams.set("lockKey", 'true');
         }
+
+        startTransition(() => {
+            setIsLocked(!isLocked);
+            router.push(`/?${searchParams}`, { scroll: false });
+        })
     };
 
-    // Provide the context value
-    const contextValue: KeyColorContextType = {
-        keyColorIsLocked,
-        toggleKeyColorLock,
-        // keyColorGenerated,
-        // setKeyColorGenerated,
+    function updateKeyIndex(value: string | number) {
+        const newValue = typeof value === "string" ? parseInt(value) : value;
+        const searchParams = new URLSearchParams(params);
+
+        if (newValue === -1 || newValue === keyIndex.generated) {
+            searchParams.delete("keyIndex");
+        } else {
+            searchParams.set("keyIndex", newValue.toString());
+        }
+
+        startTransition(() => {
+            if (newValue === -1) {
+                setKeyIndex({ ...keyIndex, current: keyIndex.generated });
+            } else {
+                setKeyIndex({ ...keyIndex, current: newValue });
+            }
+
+            router.push(`/?${searchParams}`, { scroll: false });
+        })
+    }
+
+    const contextValue = {
+        isLocked,
+        toggleIsLocked,
+        keyIndex,
+        updateKeyIndex
     };
 
     return <KeyColorContext.Provider value={contextValue}>{children}</KeyColorContext.Provider>;
 };
 
-// Custom hook to consume the context
 export const useKeyColorContext = () => {
     const context = useContext(KeyColorContext);
 

@@ -1,6 +1,14 @@
 import type { ReactNode } from "react";
 import KeyColorProvider from "./KeyColorProvider";
 
-export default function Providers({ children }: { children: ReactNode }) {
-    return <KeyColorProvider>{children}</KeyColorProvider>;
+type PropTypes = {
+    keyIndex: {
+        current: number
+        generated: number
+    }
+    children: ReactNode
+}
+
+export default function Providers({ keyIndex, children }: PropTypes) {
+    return <KeyColorProvider keyIndex={keyIndex}>{children}</KeyColorProvider>;
 }
