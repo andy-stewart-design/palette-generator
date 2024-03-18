@@ -53,6 +53,8 @@ export default function KeyColorProvider({ keyIndex: keyIndexParam, children }: 
     };
 
     function updateKeyIndex(value: string | number) {
+        if (isLocked) return;
+
         const newValue = typeof value === "string" ? parseInt(value) : value;
         const searchParams = new URLSearchParams(params);
 

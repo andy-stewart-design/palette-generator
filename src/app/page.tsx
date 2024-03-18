@@ -62,7 +62,7 @@ export default async function Home({ searchParams }: PageProps) {
             <StepsController defaultValue={stepsParam} />
           </section>
           <section className={classes.section}>
-            <KeyIndexController {...keyIndex} max={stepsParam} key={keyIndex.current} />
+            <KeyIndexController key={keyIndex.current} max={stepsParam} />
           </section>
           <div className={classes.spacer} />
           <section className={classes.section}>

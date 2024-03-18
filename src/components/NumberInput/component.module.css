@@ -54,7 +54,7 @@
   border-radius: 100vmax;
   transition: background 200ms ease-out;
 
-  &:hover {
+  &:not(:disabled):hover {
     --lightness: 60%;
     background: var(--color-primary-100);
   }

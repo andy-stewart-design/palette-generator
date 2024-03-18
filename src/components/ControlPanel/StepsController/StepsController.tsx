@@ -31,7 +31,7 @@ export default function StepsController({ defaultValue }: PropTypes) {
     return (
         <ControllerWrapper>
             <Label htmlFor="steps">Steps</Label>
-            <NumberInput id="steps" pushRouter={pushRouter} defaultValue={defaultValue} min={3} max={19} />
+            <NumberInput id="steps" onChangeCallback={pushRouter} defaultValue={defaultValue} min={3} max={19} />
         </ControllerWrapper>
     )
 }
