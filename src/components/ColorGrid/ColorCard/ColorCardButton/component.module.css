@@ -17,13 +17,14 @@
   color: var(--color-primary-dark);
   padding-inline-start: 0.125rem;
   padding-inline-end: 1rem;
+  padding-block: 0;
 
   span {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     background: lightgray;
     border-radius: 100vmax;
     transition: background 100ms ease-out, color 100ms ease-out;
@@ -43,7 +44,7 @@
   opacity: 0;
   transition: opacity 150ms ease-out;
 
-  :global(.color-card):hover>&,
+  :global(.color-card):hover > &,
   &:focus-visible {
     opacity: 1;
   }

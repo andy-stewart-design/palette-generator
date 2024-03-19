@@ -1,12 +1,18 @@
 .labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
     display: flex;
-    gap: 0.5rem;
+    align-items: center;
+  }
 }
 
 .button {
-    opacity: 0.4;
+  opacity: 0.4;
 
-    &:disabled {
-        opacity: 0;
-    }
+  &:disabled {
+    opacity: 0;
+  }
 }

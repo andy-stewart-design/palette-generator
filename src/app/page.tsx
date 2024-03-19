@@ -1,5 +1,5 @@
 // TODO: Add more granular key color selection support
-// - Add key color controls to sidebar
+// - Add ability to lock key color from sidebar
 
 // TODO: Update export options
 // - Add modal to handle export options

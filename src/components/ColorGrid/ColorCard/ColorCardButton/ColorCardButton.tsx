@@ -26,11 +26,9 @@ export default function ColorCardButton({ index, isActive }: PageProps) {
           layoutId="key-index-button"
           className={`${classes.button} ${classes.primary}`}
           onClick={toggleIsLocked}
-          data-locked={isLocked ? 'true' : 'false'}
+          data-locked={isLocked ? "true" : "false"}
         >
-          <span>
-            {isLocked ? <Locked /> : <Unlocked />}
-          </span>
+          <span>{isLocked ? <Locked /> : <Unlocked />}</span>
           Key Color
         </motion.button>
       )}
