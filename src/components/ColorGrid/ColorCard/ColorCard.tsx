@@ -8,15 +8,18 @@ import classes from "./component.module.css";
 
 type PageProps = {
   color: string;
+  name: number;
   index: number;
   numItems: number;
 };
 
 const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
-  const { color, index, numItems } = props;
+  const { color, index, numItems, name } = props;
   const { keyIndex } = useKeyColorContext();
   const isActive = index === keyIndex.current;
-  const boxShadow = `0 3px 8px -2px rgba(0 0 0 / ${(index + 1) * 0.025 + 0.15})`;
+  const boxShadow = `0 3px 8px -2px rgba(0 0 0 / ${
+    (index + 1) * 0.025 + 0.15
+  })`;
 
   return (
     <motion.div
@@ -31,12 +34,10 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
         zIndex: isActive ? 100000 : 30 - index,
       }}
     >
-      <motion.div
-        key={numItems}
-        layout="position"
-        className={classes.hex}
-      >
-        <span>{color}</span>
+      <motion.div key={numItems} layout="position" className={classes.hex}>
+        <span>
+          {name}: {color}
+        </span>
       </motion.div>
       <ColorCardButton index={index} keyIndex={keyIndex} isActive={isActive} />
     </motion.div>

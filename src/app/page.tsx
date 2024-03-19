@@ -1,4 +1,7 @@
 // TODO: Establish Design System
+// - modify the color array returned from generateSpectrum to mirror the keyColor structure
+// - create semantic CSS variable factory function
+
 // TODO: Update export options
 // - Add modal to handle export options
 // - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
@@ -16,6 +19,10 @@ import KeyIndexController from "@/components/ControlPanel/KeyIndexController";
 import StepsController from "@/components/ControlPanel/StepsController";
 import ExportButton from "@/components/ExportButton";
 import { generateSpectrum } from "@/utils/generate-spectrum";
+import {
+  generateColorNames,
+  generateCSSVariables,
+} from "@/utils/generate-color-names";
 import type { ServerSideComponentProp } from "@/types/server-components";
 import classes from "./page.module.css";
 
@@ -32,13 +39,10 @@ export default async function Home({ searchParams }: PageProps) {
   const colorObject = await generateSpectrum(hexParam, stepsParam, indexParam);
   const { colors, keyColor, keyIndex, cssVars } = colorObject;
 
-  const colorStyles = colors.reduce((acc, color, index) => {
-    const key = `--color-primary-${index + 1}00`;
-    const style = { [key]: color };
-    return { ...acc, ...style };
-  }, {});
+  const colorNames = generateColorNames(stepsParam);
+  const primitiveVariables = generateCSSVariables(colors, colorNames);
 
-  // await new Promise(resolve => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return (
     <Providers keyIndex={keyIndex}>
@@ -49,7 +53,7 @@ export default async function Home({ searchParams }: PageProps) {
           "--color-primary-dark": colors.at(-2)!,
           "--color-primary-darker": colors.at(-1)!,
           ...cssVars,
-          ...colorStyles,
+          ...primitiveVariables,
         }}
       >
         <header className={classes.header}>
@@ -67,7 +71,7 @@ export default async function Home({ searchParams }: PageProps) {
             <ExportButton colors={colors} />
           </section>
         </header>
-        <ColorGrid colors={colors} />
+        <ColorGrid colors={colors} names={colorNames} />
       </main>
     </Providers>
   );
