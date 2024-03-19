@@ -30,7 +30,7 @@
     transition: background 100ms ease-out, color 100ms ease-out;
   }
 
-  &[data-locked="true"] {
+  &[data-locked] {
     span {
       color: white;
       background: var(--color-primary-dark);
