@@ -150,6 +150,8 @@ export function generateCSSVariables(props: GenerateCSSVariablesProps) {
 
     return {
       '--color-primary': color.hex,
+      '--color-primary-light': colors.hex.at(0)!,
+      '--color-primary-lighter': colors.hex.at(1)!,
       '--color-primary-dark': colors.hex.at(-2)!,
       '--color-primary-darker': colors.hex.at(-1)!,
       '--color-primary-desaturated': primaryDesaturated,

@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import SearchInput from "@/components/SearchInput";
-import HSLInputs from "@/components/HSLInputs";
-import { formatHex, type Color, type Okhsl } from "culori";
-import debounce from "just-debounce-it";
-import classes from "./component.module.css";
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import SearchInput from '@/components/SearchInput';
+import HSLInputs from '@/components/HSLInputs';
+import { formatHex, type Color, type Okhsl } from 'culori';
+import debounce from 'just-debounce-it';
+import classes from './component.module.css';
 
 type PropTypes = {
   currentColor: {
     hex: string;
     raw: Okhsl;
+    intergerName: number;
     name: string;
   };
 };
@@ -27,16 +28,16 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
   const router = useRouter();
 
   function updateColor(color: string | { h: number; s: number; l: number }) {
-    if (typeof color === "string") {
+    if (typeof color === 'string') {
       const searchParams = new URLSearchParams(params);
 
-      if (color !== "") searchParams.set("color", color);
-      else searchParams.delete("color");
+      if (color !== '') searchParams.set('color', color);
+      else searchParams.delete('color');
 
-      searchParams.delete("keyIndex");
+      searchParams.delete('keyIndex');
       router.push(`/?${searchParams}`, { scroll: false });
     } else {
-      const raw: Color = { mode: "okhsl", h: color.h, s: color.s, l: color.l };
+      const raw: Color = { mode: 'okhsl', h: color.h, s: color.s, l: color.l };
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
@@ -50,21 +51,21 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
         const searchParams = new URLSearchParams(params);
         console.log(params.forEach((value, key) => console.log(key, value)));
 
-        searchParams.set("color", hex.replace("#", ""));
+        searchParams.set('color', hex.replace('#', ''));
         router.push(`/?${searchParams}`, { scroll: false });
       }, 200),
     []
   );
 
   const primaryDesaturated = formatHex({
-    mode: "okhsl",
+    mode: 'okhsl',
     h: currentColor.raw.h ?? 0,
     s: 0,
     l: currentColor.raw.l,
   });
 
   const primaryMedium = formatHex({
-    mode: "okhsl",
+    mode: 'okhsl',
     h: currentColor.raw.h ?? 0,
     s: 0.8,
     l: 0.6,
@@ -74,9 +75,9 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     <div
       className={classes.wrapper}
       style={{
-        "--color-primary": currentColor.hex,
-        "--color-primary-desaturated": primaryDesaturated,
-        "--color-primary-medium": primaryMedium,
+        '--color-primary': currentColor.hex,
+        '--color-primary-desaturated': primaryDesaturated,
+        '--color-primary-medium': primaryMedium,
       }}
     >
       <p className={classes.label}>
