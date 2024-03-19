@@ -1,3 +1,5 @@
+import { type Okhsl, formatHex } from 'culori';
+
 export function generateColorNames(n: number) {
   // Calculate the count for primary and secondary numbers based on the input.
   // If n is less than or equal to 9, use n for primary numbers and 0 for secondary.
@@ -85,29 +87,73 @@ function generateHalfIncrementArray(n: number) {
   return array.slice(0, n);
 }
 
-export function generateCSSVariables(
-  colors: Array<string>, // An array of color values as strings.
-  numbers: Array<number> // An array of numbers to be associated with each color.
-) {
-  // Check if the length of the colors array matches the length of the numbers array.
-  // If not, throw an error indicating the mismatch.
-  if (colors.length !== numbers.length) {
-    throw new Error(
-      `The amount of colors (${colors.length}) is not equal to the amount of numbers (${numbers.length})`
-    );
+interface GeneratePrimitiveCSSVariablesProps {
+  type: 'primitive';
+  colors: {
+    raw: Okhsl[];
+    hex: string[];
+    intergerName: number[];
+  };
+}
+
+interface GenerateSemanticCSSVariablesProps {
+  type: 'semantic';
+  color: {
+    hex: string;
+    raw: Okhsl;
+    intergerName: number;
+    name: string;
+  };
+  colors: {
+    raw: Okhsl[];
+    hex: string[];
+    intergerName: number[];
+  };
+}
+
+type GenerateCSSVariablesProps =
+  | GeneratePrimitiveCSSVariablesProps
+  | GenerateSemanticCSSVariablesProps;
+
+export function generateCSSVariables(props: GenerateCSSVariablesProps) {
+  if (props.type === 'primitive') {
+    const { colors } = props;
+    if (colors.hex.length !== colors.intergerName.length) {
+      throw new Error(
+        `The amount of colors (${colors.hex.length}) is not equal to the amount of numbers (${colors.intergerName.length})`
+      );
+    }
+
+    const variables = colors.hex.reduce((acc, color, index) => {
+      const key = `--color-primary-${colors.intergerName[index]}`;
+      const style = { [key]: color };
+      return { ...acc, ...style };
+    }, {});
+
+    return variables;
+  } else if (props.type === 'semantic') {
+    const { color, colors } = props;
+
+    const primaryDesaturated = formatHex({
+      mode: 'okhsl',
+      h: color.raw.h,
+      s: 0,
+      l: color.raw.l,
+    });
+
+    const primaryMedium = formatHex({
+      mode: 'okhsl',
+      h: color.raw.h,
+      s: 0.8,
+      l: 0.6,
+    });
+
+    return {
+      '--color-primary': color.hex,
+      '--color-primary-dark': colors.hex.at(-2)!,
+      '--color-primary-darker': colors.hex.at(-1)!,
+      '--color-primary-desaturated': primaryDesaturated,
+      '--color-primary-medium': primaryMedium,
+    };
   }
-
-  // Use the reduce function to accumulate a single object containing CSS variable definitions.
-  // The accumulator (acc) starts as an empty object and aggregates each color-number pair into a CSS variable.
-  const variables = colors.reduce((acc, color, index) => {
-    // Define the CSS variable name using the current number in the sequence.
-    const key = `--color-primary-${numbers[index]}`;
-    // Create an object representing the CSS variable, where the key is the variable name and the value is the color.
-    const style = { [key]: color };
-    // Merge the newly created style object into the accumulator object.
-    return { ...acc, ...style };
-  }, {});
-
-  // Return the final object containing all CSS variable definitions.
-  return variables;
 }

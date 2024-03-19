@@ -1,8 +1,9 @@
-import { formatHex, converter } from "culori";
-import { range } from "@/utils/arrays";
-import { getColorName } from "@/utils/get-color-name";
+import { formatHex, converter, Okhsl } from 'culori';
+import { range } from '@/utils/arrays';
+import { getColorName } from '@/utils/get-color-name';
+import { generateColorNames } from '@/utils/generate-color-names';
 
-const okhsl = converter("okhsl");
+const okhsl = converter('okhsl');
 
 export async function generateSpectrum(
   hexParam: string,
@@ -10,7 +11,8 @@ export async function generateSpectrum(
   keyIndexParam: string | undefined
 ) {
   const keyColor = okhsl(hexParam);
-  if (!keyColor) throw new Error("Invalid color");
+
+  if (!keyColor) throw new Error('Invalid color');
 
   const keyHue = keyColor.h ?? 0;
   const keySaturation = keyColor.s;
@@ -26,7 +28,8 @@ export async function generateSpectrum(
     min: lightnessDark,
     spread: lightnessRange,
     steps: numSteps,
-  })
+  });
+
   const keyIndexCurrent = keyIndexParam ? parseInt(keyIndexParam) : keyIndexGenerated;
 
   const numStepsBeforeKey = keyIndexCurrent;
@@ -45,49 +48,44 @@ export async function generateSpectrum(
 
   const lightnessValues = [...lowerRange, keyLightness, ...upperRange];
 
+  const colorsRaw: Array<Okhsl> = lightnessValues.map((lightness) => ({
+    mode: 'okhsl',
+    h: keyHue,
+    s: keySaturation,
+    l: lightness,
+  }));
+
+  const colorsHex = colorsRaw.map((color) => {
+    return formatHex(color);
+  });
+
   const colors = lightnessValues.map((lightness) => {
     return formatHex({
-      mode: "okhsl",
+      mode: 'okhsl',
       h: keyHue,
       s: keySaturation,
       l: lightness,
     });
   });
 
-  // CUSTOM PROPS (WILL BE MADE INTO OWN FUNCTION)
-
-  const primaryDesaturated = formatHex({
-    mode: "okhsl",
-    h: keyHue,
-    s: 0,
-    l: keyColor.l,
-  });
-
-  const primaryMedium = formatHex({
-    mode: "okhsl",
-    h: keyHue,
-    s: 0.8,
-    l: 0.6,
-  });
-
-  // ---------------------------------------------
-
   const name = (await getColorName(colors[keyIndexCurrent])) as string;
+  const intergerNames = generateColorNames(stepsParam);
 
   return {
-    colors,
+    colors: {
+      raw: colorsRaw,
+      hex: colorsHex,
+      intergerName: intergerNames,
+    },
     keyColor: {
       hex: hexParam,
       raw: keyColor,
+      intergerName: intergerNames[keyIndexCurrent],
       name,
     },
     keyIndex: {
       current: keyIndexCurrent,
       generated: keyIndexGenerated,
-    },
-    cssVars: {
-      "--color-primary-desaturated": primaryDesaturated,
-      "--color-primary-medium": primaryMedium,
     },
   };
 }
