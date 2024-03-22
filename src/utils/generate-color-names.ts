@@ -87,16 +87,16 @@ function generateHalfIncrementArray(n: number) {
   return array.slice(0, n);
 }
 
-interface GeneratePrimitiveCSSVariablesProps {
+type GeneratePrimitiveCSSVariablesProps = {
   type: 'primitive';
   colors: {
     raw: Okhsl[];
     hex: string[];
     intergerName: number[];
   };
-}
+};
 
-interface GenerateSemanticCSSVariablesProps {
+type GenerateSemanticCSSVariablesProps = {
   type: 'semantic';
   color: {
     hex: string;
@@ -109,7 +109,7 @@ interface GenerateSemanticCSSVariablesProps {
     hex: string[];
     intergerName: number[];
   };
-}
+};
 
 type GenerateCSSVariablesProps =
   | GeneratePrimitiveCSSVariablesProps
