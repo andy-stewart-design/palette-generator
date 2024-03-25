@@ -34,24 +34,24 @@
   left: var(--offset);
 
   display: block;
-  height: calc(var(--input-height) - 2 * var(--offset));
-  width: calc(var(--input-height) - 2 * var(--offset));
+  block-size: calc(var(--input-height) - 2 * var(--offset));
+  inline-size: calc(var(--input-height) - 2 * var(--offset));
   background: var(--color-primary);
-  border: 1px solid oklch(var(--black-oklch) / 20%);
-  border-radius: 100vmax;
+  border: 1px var(--border-light);
+  border-radius: var(--brad-full);
 }
 
 .input {
   position: relative;
-  height: var(--input-height);
-  width: 100%;
+  block-size: var(--input-height);
+  inline-size: 100%;
   background: transparent;
-  border: 1px solid oklch(var(--black-oklch) / 10%);
-  border-radius: 100vmax;
+  border: 1px var(--border-xlight);
+  border-radius: var(--brad-full);
   padding-inline-start: calc(var(--input-height) + var(--space-14));
   padding-inline-end: var(--space-6);
   padding-block: var(--space-4);
-  min-width: 0;
+  min-inline-size: 0;
 
   &:focus {
     outline: none;

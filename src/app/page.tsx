@@ -1,5 +1,3 @@
-// TODO: Establish Design System
-
 // TODO: Update export options
 // - Add modal to handle export options
 // - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
@@ -15,7 +13,7 @@ import ColorPicker from '@/components/ColorPicker';
 import ColorGrid from '@/components/ColorGrid';
 import KeyIndexController from '@/components/ControlPanel/KeyIndexController';
 import StepsController from '@/components/ControlPanel/StepsController';
-import ExportButton from '@/components/ExportButton';
+import ExportButton from '@/components/ControlPanel/ExportButton';
 import { generateSpectrum } from '@/utils/generate-spectrum';
 import { generateCSSVariables } from '@/utils/generate-color-names';
 import type { ServerSideComponentProp } from '@/types/server-components';

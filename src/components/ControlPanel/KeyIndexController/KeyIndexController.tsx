@@ -1,20 +1,19 @@
-"use client";
+'use client';
 
-import ControllerWrapper from "../ControllerWrapper";
-import Label from "@/components/Label";
-import NumberInput from "@/components/NumberInput";
-import { Locked, Undo, Unlocked } from "@/components/icons/16";
-import { useKeyColorContext } from "@/components/Providers";
-import classes from "./component.module.css";
-import VisuallyHidden from "@/components/VisuallyHidden";
+import ControllerWrapper from '../ControllerWrapper';
+import Label from '@/components/base/Label';
+import NumberInput from '@/components/base/NumberInput';
+import { Locked, Undo, Unlocked } from '@/components/icons/16';
+import { useKeyColorContext } from '@/components/Providers';
+import classes from './component.module.css';
+import VisuallyHidden from '@/components/base/VisuallyHidden';
 
 type PropTypes = {
   max: number;
 };
 
 export default function KeyIndexController({ max }: PropTypes) {
-  const { keyIndex, updateKeyIndex, isLocked, toggleIsLocked } =
-    useKeyColorContext();
+  const { keyIndex, updateKeyIndex, isLocked, toggleIsLocked } = useKeyColorContext();
 
   const resetIndex = () => updateKeyIndex(-1);
 
@@ -25,7 +24,7 @@ export default function KeyIndexController({ max }: PropTypes) {
         <Label as="span">
           <button onClick={toggleIsLocked} className={classes.button}>
             {isLocked ? <Locked /> : <Unlocked />}
-            <VisuallyHidden>{isLocked ? "Unlock" : "Lock"}</VisuallyHidden>
+            <VisuallyHidden>{isLocked ? 'Unlock' : 'Lock'}</VisuallyHidden>
           </button>
         </Label>
         <Label as="span">

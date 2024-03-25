@@ -6,7 +6,7 @@
   align-items: center;
 
   background-color: var(--background-color);
-  transition: background-color 500ms ease-out;
+  transition: background-color 1000ms var(--ease-out-3);
 
   @media screen and (width >=800px) {
     flex-basis: 0;
@@ -21,9 +21,9 @@
   padding-inline: var(--space-6);
   padding-block: var(--space-4);
   box-shadow: var(--box-shadow);
-  border: 1px solid oklch(var(--white-oklch) / 20%);
+  border: 1px var(--border-light-inverted);
   background-clip: padding-box;
-  border-radius: var(--space-4);
+  border-radius: var(--brad);
 
   color: white;
   font-family: monospace;

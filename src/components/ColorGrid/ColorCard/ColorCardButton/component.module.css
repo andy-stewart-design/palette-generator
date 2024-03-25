@@ -1,7 +1,7 @@
 .button {
-  height: var(--space-32);
+  block-size: var(--space-32);
   border: 1px solid var(--white);
-  border-radius: 100vmax;
+  border-radius: var(--brad-full);
   box-shadow: var(--box-shadow);
 
   font-size: var(--space-14);
@@ -23,11 +23,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--space-28);
-    height: var(--space-28);
+    inline-size: var(--space-28);
+    block-size: var(--space-28);
     background: lightgray;
-    border-radius: 100vmax;
-    transition: background 100ms ease-out, color 100ms ease-out;
+    border-radius: var(--brad-full);
+    transition: background 200ms var(--ease-out-3), color 200ms var(--ease-out-3);
   }
 
   &[data-locked] {
@@ -42,7 +42,7 @@
   padding-inline: var(--space-16);
   color: var(--white);
   opacity: 0;
-  transition: opacity 150ms ease-out;
+  transition: opacity 200ms var(--ease-out-3);
 
   :global(.color-card):hover > &,
   &:focus-visible {

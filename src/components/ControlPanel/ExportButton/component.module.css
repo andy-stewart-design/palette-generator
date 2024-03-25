@@ -1,6 +1,6 @@
 .button {
   --tansition-duration: 100ms;
-  --tansition-easing: ease-out;
+  --tansition-easing: var(--ease-out-3);
 
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
 
   inline-size: 100%;
   background: var(--color-primary-dark);
-  border-radius: 100vmax;
+  border-radius: var(--brad-full);
   padding-block-start: var(--space-12);
   padding-block-end: var(--space-14);
 

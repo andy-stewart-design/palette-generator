@@ -1,5 +1,5 @@
 .input {
-  width: 100%;
+  inline-size: 100%;
   flex: 1 0 0;
   accent-color: var(--color-primary);
 
@@ -8,8 +8,7 @@
   --slider-height: var(--space-24);
 
   --track-height: var(--space-16);
-  --track-border-radius: var(--border-radius);
-  --track-border-radius: var(--space-8);
+  --track-border-radius: var(--brad-full);
   --track-fill-color-start: var(--color-primary);
   --track-fill-color-end: var(--color-primary);
   --track-background-color: var(--color-primary-100);
@@ -27,7 +26,7 @@
   --thumb-color: transparent;
   --thumb-color: var(--white);
   --thumb-border: 2px solid var(--color-primary);
-  --thumb-border-radius: 100vmax;
+  --thumb-border-radius: var(--brad-full);
   --thumb-shadow: none;
   --thumb-filter: none;
 
@@ -35,8 +34,8 @@
 
   position: relative;
   flex-grow: 1;
-  height: var(--slider-height);
-  width: 100%;
+  block-size: var(--slider-height);
+  inline-size: 100%;
 
   background-color: transparent;
   border: var(--border);
@@ -64,8 +63,8 @@
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: var(--thumb-height);
-    width: var(--thumb-width);
+    block-size: var(--thumb-height);
+    inline-size: var(--thumb-width);
     border: var(--thumb-border);
     border-radius: var(--thumb-border-radius);
     background: var(--thumb-color);
@@ -76,8 +75,8 @@
   }
 
   &::-moz-range-thumb {
-    height: var(--thumb-hight);
-    width: var(--thumb-width);
+    block-size: var(--thumb-hight);
+    inline-size: var(--thumb-width);
     border: var(--thumb-border);
     border-radius: var(--thumb-border-radius);
     background: var(--thumb-color);
@@ -87,13 +86,13 @@
   }
 
   &::-webkit-slider-runnable-track {
-    height: var(--track-height);
+    block-size: var(--track-height);
     background: var(--track-background);
     border-radius: var(--track-border-radius);
   }
 
   &::-moz-range-track {
-    height: var(--track-height);
+    block-size: var(--track-height);
     background: var(--track-background);
     border-radius: var(--track-border-radius);
   }
