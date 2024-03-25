@@ -1,5 +1,7 @@
 @layer reset, base, component, override;
 
 @import './base/reset.css' layer(reset);
+
+@import './base/color.css' layer(base);
 @import './base/spacing.css' layer(base);
 @import './base/shadows.css' layer(base);

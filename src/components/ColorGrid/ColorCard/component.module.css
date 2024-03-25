@@ -17,17 +17,19 @@
   position: absolute;
   top: var(--space-8);
   left: var(--space-8);
-  background: rgb(0 0 0 / 0.95);
+  background: oklch(var(--black-oklch) / 85%);
   padding-inline: var(--space-6);
   padding-block: var(--space-4);
   box-shadow: var(--box-shadow);
-  border: 1px solid rgb(255 255 255 / 0.25);
-  border-radius: var(--space-3);
+  border: 1px solid oklch(var(--white-oklch) / 20%);
+  background-clip: padding-box;
+  border-radius: var(--space-4);
 
   color: white;
   font-family: monospace;
   font-size: var(--space-12);
   font-weight: 500;
+  user-select: none;
 
   @media screen and (width >=800px) {
     top: var(--space-16);

@@ -50,7 +50,7 @@
   min-width: var(--space-32);
   height: var(--space-32);
   background: transparent;
-  border: 1px solid rgba(0 0 0 / 0.1);
+  border: 1px solid oklch(var(--black-oklch) / 10%);
   border-radius: 100vmax;
   transition: background 200ms ease-out;
 

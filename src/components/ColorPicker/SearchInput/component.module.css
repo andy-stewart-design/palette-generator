@@ -37,7 +37,7 @@
   height: calc(var(--input-height) - 2 * var(--offset));
   width: calc(var(--input-height) - 2 * var(--offset));
   background: var(--color-primary);
-  border: 1px solid rgb(0 0 0 / 0.2);
+  border: 1px solid oklch(var(--black-oklch) / 20%);
   border-radius: 100vmax;
 }
 
@@ -46,7 +46,7 @@
   height: var(--input-height);
   width: 100%;
   background: transparent;
-  border: 1px solid rgb(0 0 0 / 0.1);
+  border: 1px solid oklch(var(--black-oklch) / 10%);
   border-radius: 100vmax;
   padding-inline-start: calc(var(--input-height) + var(--space-14));
   padding-inline-end: var(--space-6);

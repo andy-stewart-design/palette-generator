@@ -25,7 +25,7 @@
   --thumb-height: var(--thumb-width);
   --thumb-offset: calc((var(--thumb-height) - var(--track-height)) / 2 * -1);
   --thumb-color: transparent;
-  --thumb-color: white;
+  --thumb-color: var(--white);
   --thumb-border: 2px solid var(--color-primary);
   --thumb-border-radius: 100vmax;
   --thumb-shadow: none;
@@ -102,11 +102,6 @@
     &::-webkit-slider-runnable-track,
     &::-moz-range-track {
       background: oklch(var(--gray-700-oklch) / 40%);
-    }
-
-    & + input[type='number'] {
-      background: transparent;
-      border: 1px solid oklch(var(--white-oklch) / 8%);
     }
   }
 }

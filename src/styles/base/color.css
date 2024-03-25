@@ -1,0 +1,7 @@
+:where(html) {
+  --white-oklch: 100% 0 0;
+  --white: oklch(var(--white-oklch));
+
+  --black-oklch: 0% 0 0;
+  --black: oklch(var(--black-oklch));
+}

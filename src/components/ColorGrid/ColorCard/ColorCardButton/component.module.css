@@ -1,6 +1,6 @@
 .button {
   height: var(--space-32);
-  border: 1px solid white;
+  border: 1px solid var(--white);
   border-radius: 100vmax;
   box-shadow: var(--box-shadow);
 
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-8);
-  background: white;
+  background: var(--white);
   color: var(--color-primary-dark);
   padding-inline-start: var(--space-1);
   padding-inline-end: var(--space-16);
@@ -32,7 +32,7 @@
 
   &[data-locked] {
     span {
-      color: white;
+      color: var(--white);
       background: var(--color-primary-dark);
     }
   }
@@ -40,7 +40,7 @@
 
 .secondary {
   padding-inline: var(--space-16);
-  color: white;
+  color: var(--white);
   opacity: 0;
   transition: opacity 150ms ease-out;
 
