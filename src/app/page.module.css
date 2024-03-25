@@ -1,6 +1,6 @@
 .main {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: var(--space-320) 1fr;
   min-height: 100dvh;
 }
 
@@ -13,13 +13,12 @@
 }
 
 .section {
-  padding-inline: 1rem;
-  padding-block: 2rem;
+  padding-inline: var(--space-16);
+  padding-block: var(--space-32);
   border-bottom: 1px solid rgb(0 0 0 / 0.1);
 
   @media screen and (width >= 800px) {
-    padding-inline: 1.5rem;
-    padding-block: 2rem;
+    padding-inline: var(--space-28);
   }
 
   &:last-of-type {

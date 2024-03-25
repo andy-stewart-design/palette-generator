@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, type ChangeEvent, useEffect } from "react";
-import RangeInput from "../base/RangeInput";
-import type { Okhsl } from "culori/src/okhsl/types";
-import classes from "./component.module.css";
+import { useState, type ChangeEvent, useEffect } from 'react';
+import RangeInput from '../../base/RangeInput';
+import type { Okhsl } from 'culori/src/okhsl/types';
+import classes from './component.module.css';
 
 type PropTypes = {
   color: Okhsl;

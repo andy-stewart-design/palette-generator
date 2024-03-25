@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import SearchInput from '@/components/SearchInput';
-import HSLInputs from '@/components/HSLInputs';
+import SearchInput from '@/components/ColorPicker/SearchInput';
+import HSLInputs from '@/components/ColorPicker/HSLInputs';
 import { formatHex, type Color, type Okhsl } from 'culori';
 import debounce from 'just-debounce-it';
 import classes from './component.module.css';

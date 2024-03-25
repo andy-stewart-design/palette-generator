@@ -1,20 +1,24 @@
 .button {
+  --tansition-duration: 100ms;
+  --tansition-easing: ease-out;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-8);
 
   inline-size: 100%;
   background: var(--color-primary-dark);
   border-radius: 100vmax;
-  padding-block-start: 0.75rem;
-  padding-block-end: 0.875rem;
+  padding-block-start: var(--space-12);
+  padding-block-end: var(--space-14);
 
   text-align: center;
   font-weight: 500;
   color: var(--color-primary-100);
 
-  transition: scale 100ms ease-out, background 100ms ease-out;
+  transition: scale var(--tansition-duration) var(--tansition-easing),
+    background var(--tansition-duration) var(--tansition-easing);
 
   &:active {
     scale: 0.95;

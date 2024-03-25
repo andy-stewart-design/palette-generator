@@ -1,10 +1,10 @@
 .button {
-  height: 32px;
+  height: var(--space-32);
   border: 1px solid white;
   border-radius: 100vmax;
   box-shadow: var(--box-shadow);
 
-  font-size: 0.875rem;
+  font-size: var(--space-14);
   font-weight: 500;
   text-align: center;
 }
@@ -12,19 +12,19 @@
 .primary {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-8);
   background: white;
   color: var(--color-primary-dark);
-  padding-inline-start: 0.125rem;
-  padding-inline-end: 1rem;
+  padding-inline-start: var(--space-1);
+  padding-inline-end: var(--space-16);
   padding-block: 0;
 
   span {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 26px;
-    height: 26px;
+    width: var(--space-28);
+    height: var(--space-28);
     background: lightgray;
     border-radius: 100vmax;
     transition: background 100ms ease-out, color 100ms ease-out;
@@ -39,7 +39,7 @@
 }
 
 .secondary {
-  padding-inline: 1rem;
+  padding-inline: var(--space-16);
   color: white;
   opacity: 0;
   transition: opacity 150ms ease-out;

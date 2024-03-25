@@ -1,4 +1,4 @@
 .label {
-    font-size: 13px;
-    font-weight: 500;
+  font-size: var(--space-13);
+  font-weight: 500;
 }

@@ -1,19 +1,19 @@
 .section {
   display: grid;
-  gap: 0.5rem;
-  padding-inline: 0.5rem;
+  gap: var(--space-8);
+  /* padding-inline: var(--space-8); */
 }
 
 .wrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 13px;
+  gap: var(--space-8);
+  font-size: var(--space-13);
   font-weight: 500;
 }
 
 .label {
-  flex: 0 0 10px;
+  flex: 0 0 var(--space-10);
 }
 
 .hue {
@@ -46,7 +46,7 @@
 }
 
 .value {
-  flex: 0 0 36px;
+  flex: 0 0 var(--space-36);
   font-variant-numeric: tabular-nums;
   text-align: end;
 }
