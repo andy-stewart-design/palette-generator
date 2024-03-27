@@ -61,7 +61,7 @@ export default function ExportPanel({ colors }: PropTypes) {
                   <p>{`:root {`}</p>
                   <ul>
                     {generated.content.map(({ name, value }) => (
-                      <li>
+                      <li key={value}>
                         {name}: {value};
                       </li>
                     ))}
