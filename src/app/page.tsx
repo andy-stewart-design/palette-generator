@@ -3,9 +3,13 @@
 // - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
 // - For CSS/TW, add ability to select color mode
 
-// TODO: Persis last color with cookies
+// TODO: Hit + Likes Counter (using turso)
+// TODO: Toast Messages
+// TODO: Copy individual colors by clicking on hex value
+// TODO: Persist last color with cookies
 // TODO: Add color accessibility grid
 // TODO: Add ability to do color palettes as well as color spectra
+// TODO: P3 Colors
 // TODO: Improve performance of saturated yellow hues
 
 import Providers from '@/components/Providers';
@@ -13,7 +17,7 @@ import ColorPicker from '@/components/ColorPicker';
 import ColorGrid from '@/components/ColorGrid';
 import KeyIndexController from '@/components/ControlPanel/KeyIndexController';
 import StepsController from '@/components/ControlPanel/StepsController';
-import ExportButton from '@/components/ControlPanel/ExportButton';
+import ExportDialog, { ExportRoot, ExportTrigger } from '@/components/ControlPanel/ExportDialog';
 import { generateSpectrum } from '@/utils/generate-spectrum';
 import { generateCSSVariables } from '@/utils/generate-color-names';
 import type { ServerSideComponentProp } from '@/types/server-components';
@@ -53,7 +57,11 @@ export default async function Home({ searchParams }: PageProps) {
           </section>
           <div className={classes.spacer} />
           <section className={classes.section}>
-            <ExportButton colors={colors.hex} />
+            {/* <ExportButton colors={colors.hex} /> */}
+            <ExportRoot>
+              <ExportTrigger />
+              <ExportDialog />
+            </ExportRoot>
           </section>
         </header>
         <ColorGrid colors={colors.hex} names={colors.intergerName} />
