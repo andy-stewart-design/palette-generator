@@ -13,24 +13,24 @@ type PropTypes = {
 export default function HSLInputs({ color, updateColor }: PropTypes) {
   const [hue, setHue] = useState(color.h ?? 0);
   const [saturation, setSaturation] = useState(color.s);
-  const [ligthness, setLightness] = useState(color.l);
+  const [lightness, setLightness] = useState(color.l);
 
   useEffect(() => {
     if (color.h !== hue) setHue(color.h ?? 0);
     if (color.s !== saturation) setSaturation(color.s);
-    if (color.l !== ligthness) setLightness(color.l);
-  }, [color]);
+    if (color.l !== lightness) setLightness(color.l);
+  }, [hue, saturation, lightness, color]);
 
   function updateHue(e: ChangeEvent<HTMLInputElement>) {
     const newHue = parseFloat(e.target.value);
     setHue(newHue);
-    updateColor({ h: newHue, s: saturation, l: ligthness });
+    updateColor({ h: newHue, s: saturation, l: lightness });
   }
 
   function updateSaturation(e: ChangeEvent<HTMLInputElement>) {
     const newSaturation = parseFloat(e.target.value);
     setSaturation(newSaturation);
-    updateColor({ h: hue, s: newSaturation, l: ligthness });
+    updateColor({ h: hue, s: newSaturation, l: lightness });
   }
 
   function updateLightness(e: ChangeEvent<HTMLInputElement>) {
@@ -76,13 +76,13 @@ export default function HSLInputs({ color, updateColor }: PropTypes) {
         </label>
         <RangeInput
           className={classes.lightness}
-          value={ligthness}
+          value={lightness}
           onChange={updateLightness}
           min={0}
           max={1}
           step={0.01}
         />
-        <span className={classes.value}>{ligthness.toFixed(2)}</span>
+        <span className={classes.value}>{lightness.toFixed(2)}</span>
       </div>
     </article>
   );

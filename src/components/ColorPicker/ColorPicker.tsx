@@ -22,7 +22,7 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
 
   useEffect(() => {
     if (currentColor !== systemColor) setCurrentColor(systemColor);
-  }, [systemColor]);
+  }, [systemColor, currentColor]);
 
   const params = useSearchParams();
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
         searchParams.set('color', hex.replace('#', ''));
         router.push(`/?${searchParams}`, { scroll: false });
       }, 200),
-    []
+    [router]
   );
 
   const primaryDesaturated = formatHex({
