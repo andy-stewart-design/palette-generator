@@ -68,11 +68,4 @@ export function generateSVG(hexColors: string[]) {
   const svgString: string = new XMLSerializer().serializeToString(svg);
 
   return svgString;
-
-  // try {
-  //   await navigator.clipboard.writeText(svgString);
-  //   console.log('SVG copied to clipboard successfully!');
-  // } catch (err) {
-  //   console.error('Failed to copy SVG to clipboard:', err);
-  // }
 }

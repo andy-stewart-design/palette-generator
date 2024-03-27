@@ -116,22 +116,7 @@ type GenerateCSSVariablesProps =
   | GenerateSemanticCSSVariablesProps;
 
 export function generateCSSVariables(props: GenerateCSSVariablesProps) {
-  if (props.type === 'primitive') {
-    const { colors } = props;
-    if (colors.hex.length !== colors.intergerName.length) {
-      throw new Error(
-        `The amount of colors (${colors.hex.length}) is not equal to the amount of numbers (${colors.intergerName.length})`
-      );
-    }
-
-    const variables = colors.hex.reduce((acc, color, index) => {
-      const key = `--color-primary-${colors.intergerName[index]}`;
-      const style = { [key]: color };
-      return { ...acc, ...style };
-    }, {});
-
-    return variables;
-  } else if (props.type === 'semantic') {
+  if (props.type === 'semantic') {
     const { color, colors } = props;
 
     const primaryDesaturated = formatHex({
@@ -157,5 +142,20 @@ export function generateCSSVariables(props: GenerateCSSVariablesProps) {
       '--color-primary-desaturated': primaryDesaturated,
       '--color-primary-medium': primaryMedium,
     };
+  } else {
+    const { colors } = props;
+    if (colors.hex.length !== colors.intergerName.length) {
+      throw new Error(
+        `The amount of colors (${colors.hex.length}) is not equal to the amount of numbers (${colors.intergerName.length})`
+      );
+    }
+
+    const variables = colors.hex.reduce((acc, color, index) => {
+      const key = `--color-primary-${colors.intergerName[index]}`;
+      const style = { [key]: color };
+      return { ...acc, ...style };
+    }, {});
+
+    return variables as Record<string, string>;
   }
 }

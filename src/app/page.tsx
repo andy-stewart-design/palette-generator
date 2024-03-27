@@ -1,5 +1,4 @@
 // TODO: Update export options
-// - Add modal to handle export options
 // - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
 // - For CSS/TW, add ability to select color mode
 
@@ -57,10 +56,9 @@ export default async function Home({ searchParams }: PageProps) {
           </section>
           <div className={classes.spacer} />
           <section className={classes.section}>
-            {/* <ExportButton colors={colors.hex} /> */}
             <ExportRoot>
               <ExportTrigger />
-              <ExportDialog colors={colors.hex} />
+              <ExportDialog colors={colors} />
             </ExportRoot>
           </section>
         </header>

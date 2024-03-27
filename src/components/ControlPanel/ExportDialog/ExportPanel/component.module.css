@@ -8,6 +8,7 @@
 .tabs {
   display: grid;
   grid-auto-rows: min-content;
+  border-right: 1px var(--border-xlight);
 }
 
 .sticky {
@@ -37,25 +38,34 @@
 
 .panels {
   position: relative;
-  border-left: 1px var(--border-xlight);
-  background: lightgray;
-}
-
-.figma {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    width: 100%;
-    height: auto;
-    user-select: none;
-  }
+  background: oklch(var(--black-oklch) / 7%);
 }
 
 .panel {
   padding: var(--space-24);
   min-height: calc(100% - 80px);
+
+  &.figma {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 100%;
+      height: auto;
+      user-select: none;
+    }
+  }
+
+  &.code {
+    ul {
+      font: monospace;
+    }
+    li {
+      padding-left: 2ch;
+      letter-spacing: 0.25px;
+    }
+  }
 }
 
 .export {
@@ -66,8 +76,25 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-16);
+  align-items: center;
+  gap: var(--space-8);
   border-top: 1px var(--border-xlight);
   padding-inline: var(--space-24);
   background: oklch(var(--white-oklch) / 90%);
+
+  button {
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: var(--brad-full);
+    padding-inline: var(--space-20);
+    padding-block: var(--space-12);
+    font-weight: 500;
+    min-width: 120px;
+
+    &:nth-of-type(2) {
+      background-color: transparent;
+      color: var(--black);
+      border: 1.5px var(--border-default);
+    }
+  }
 }

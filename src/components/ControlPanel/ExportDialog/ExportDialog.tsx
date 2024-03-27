@@ -2,12 +2,17 @@
 
 import React, { ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Close } from '@/components/icons/20';
-import classes from './component.module.css';
 import ExportPanel from './ExportPanel';
+import { Close } from '@/components/icons/20';
+import type { Okhsl } from 'culori';
+import classes from './component.module.css';
 
 type PropTypes = {
-  colors: Array<string>;
+  colors: {
+    raw: Okhsl[];
+    hex: string[];
+    intergerName: number[];
+  };
 };
 
 export default function ExportDialog({ ...delegated }: PropTypes) {
