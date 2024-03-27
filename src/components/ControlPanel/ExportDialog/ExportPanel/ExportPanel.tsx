@@ -21,8 +21,7 @@ type PropTypes = {
 export default function ExportPanel({ colors }: PropTypes) {
   const [value, setValue] = useState<TabValue>('figma');
 
-  const generated = getContent(value, colors);
-  const colorPaletteSVG = generateSVG(colors.hex);
+  const generated = generateHTML(value, colors);
 
   return (
     <Tabs.Root
@@ -48,40 +47,22 @@ export default function ExportPanel({ colors }: PropTypes) {
       </Tabs.List>
       <div className={classes.panels}>
         {tabContent.map((tab) => (
-          <>
-            {generated.type === 'figma' ? (
-              <Tabs.Content key={tab.value} value={tab.value} asChild>
-                <div className={`${classes.panel} ${classes.figma}`}>
-                  <div dangerouslySetInnerHTML={{ __html: generated.content }} />
-                </div>
-              </Tabs.Content>
-            ) : (
-              <Tabs.Content key={tab.value} value={tab.value} asChild>
-                <div className={`${classes.panel} ${classes.code}`}>
-                  <p>{`:root {`}</p>
-                  <ul>
-                    {generated.content.map(({ name, value }) => (
-                      <li key={value}>
-                        {name}: {value};
-                      </li>
-                    ))}
-                  </ul>
-                  <p>{`}`}</p>
-                </div>
-              </Tabs.Content>
-            )}
-          </>
+          <Tabs.Content key={tab.value} value={tab.value} asChild>
+            <div className={`${classes.panel} ${classes[tab.value]}`}>
+              <div dangerouslySetInnerHTML={{ __html: generated.htmlString }} />
+            </div>
+          </Tabs.Content>
         ))}
         <div className={classes.export}>
-          <button onClick={() => copyToClipboard(colorPaletteSVG)}>Copy</button>
-          <button onClick={() => downloadFile(colorPaletteSVG)}>Download</button>
+          <button onClick={() => copyToClipboard(generated.copyString)}>Copy</button>
+          <button onClick={() => downloadFile(generated.copyString)}>Download</button>
         </div>
       </div>
     </Tabs.Root>
   );
 }
 
-function getContent(
+function generateHTML(
   type: TabValue,
   colors: {
     raw: Okhsl[];
@@ -90,11 +71,54 @@ function getContent(
   }
 ) {
   if (type === 'figma') {
-    return { type, content: generateSVG(colors.hex) };
+    return { type, htmlString: generateSVG(colors.hex), copyString: generateSVG(colors.hex) };
   } else {
     const primitiveVariables = generateCSSVariables({ type: 'primitive', colors });
     const cssVarNames = Object.keys(primitiveVariables);
     const cssVarValues = Object.values(primitiveVariables);
-    return { type, content: cssVarNames.map((name, i) => ({ name, value: cssVarValues[i] })) };
+    const colorsArray = cssVarNames.map((name, i) => ({ name, value: cssVarValues[i] }));
+    return {
+      type,
+      htmlString: generatePaletteHTML(colorsArray),
+      copyString: generatePaletteCopyString(colorsArray),
+    };
   }
+}
+
+function generatePaletteHTML(colorsArray: { name: string; value: string }[]): string {
+  const containerDiv = document.createElement('div');
+  const beforeParagraph = document.createElement('p');
+  const afterParagraph = document.createElement('p');
+  const ul = document.createElement('ul');
+
+  beforeParagraph.textContent = ':where(:root) {';
+  afterParagraph.textContent = '}';
+
+  containerDiv.appendChild(beforeParagraph);
+
+  colorsArray.forEach((color) => {
+    const li = document.createElement('li');
+    const nameSpan = document.createElement('span');
+    const valueSpan = document.createElement('span');
+
+    nameSpan.textContent = `${color.name}: `;
+    nameSpan.dataset.varname = '';
+    valueSpan.textContent = color.value;
+
+    li.appendChild(nameSpan);
+    li.appendChild(valueSpan);
+    ul.appendChild(li);
+  });
+
+  containerDiv.appendChild(ul);
+  containerDiv.appendChild(afterParagraph);
+
+  return containerDiv.outerHTML;
+}
+
+function generatePaletteCopyString(colorsArray: { name: string; value: string }[]): string {
+  return colorsArray
+    .map((color) => `${color.name}: ${color.value};`)
+    .join('\n')
+    .trim();
 }

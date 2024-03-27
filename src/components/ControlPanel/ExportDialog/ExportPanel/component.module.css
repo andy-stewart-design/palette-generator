@@ -57,13 +57,21 @@
     }
   }
 
-  &.code {
+  &.css-vars {
+    font-family: monospace;
+    font-size: var(--space-16);
+
     ul {
       font: monospace;
     }
+
     li {
       padding-left: 2ch;
       letter-spacing: 0.25px;
+
+      span[data-varname] {
+        color: blue;
+      }
     }
   }
 }

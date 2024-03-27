@@ -65,7 +65,9 @@ export function generateSVG(hexColors: string[]) {
     }
   }
 
-  const svgString: string = new XMLSerializer().serializeToString(svg);
+  return svgToString(svg);
+}
 
-  return svgString;
+export function svgToString(svg: SVGSVGElement) {
+  return new XMLSerializer().serializeToString(svg);
 }
