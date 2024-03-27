@@ -8,7 +8,6 @@
 .tabs {
   display: grid;
   grid-auto-rows: min-content;
-  /* border: 2px solid red; */
 }
 
 .sticky {
@@ -16,7 +15,6 @@
   display: grid;
   grid-auto-rows: min-content;
   top: var(--space-48);
-  /* border: 2px solid salmon; */
 }
 
 .tab {
@@ -31,20 +29,33 @@
     color: blue;
     border-bottom: 1px solid blue;
   }
+
+  &:disabled {
+    color: oklch(var(--black-oklch) / 35%);
+  }
 }
 
 .panels {
   position: relative;
-  min-height: 100%;
   border-left: 1px var(--border-xlight);
-  /* background: lightpink; */
+  background: lightgray;
+}
+
+.figma {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 100%;
+    height: auto;
+    user-select: none;
+  }
 }
 
 .panel {
-  /* overflow-y: scroll; */
   padding: var(--space-24);
   min-height: calc(100% - 80px);
-  /* height: 100%; */
 }
 
 .export {

@@ -1,79 +1,78 @@
-export async function generateSVG(hexColors: string[]) {
+export function generateSVG(hexColors: string[]) {
   const chipWidth = 112;
   const chipHeight = 136;
   const chipPadding = 8;
+  const swatchSize = 96;
+  const textSize = 10;
+  const borderRadius = 8;
+
+  const numCards = hexColors.length;
+  const columns = numCards < 4 ? numCards : Math.floor(numCards / 10) + 4;
+  const rows = Math.ceil(numCards / columns);
 
   const svgPadding = 8;
-  const svgWidth =
-    hexColors.length * chipWidth + (hexColors.length + 1) * svgPadding;
-  const svgHeight = chipHeight + svgPadding * 2;
+  const svgWidth = columns * chipWidth + (columns + 1) * svgPadding;
+  const svgHeight = rows * chipHeight + (rows + 1) * svgPadding;
 
-  const swatchSize = 96;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', `${svgWidth}px`);
+  svg.setAttribute('height', `${svgHeight}px`);
+  svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
 
-  const textSize = 10;
-  const borderRadius = 4;
+  for (let indexY = 0; indexY < rows; indexY++) {
+    for (let indexX = 0; indexX < columns; indexX++) {
+      const index = indexY * columns + indexX;
+      if (index >= numCards) break;
 
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("width", `${svgWidth}px`);
-  svg.setAttribute("height", `${svgHeight}px`);
+      const color = hexColors[index];
 
-  hexColors.forEach((color: string, index: number) => {
-    const group: SVGElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "g"
-    );
+      const group: SVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
-    const chipOffsetX = index * (chipWidth + svgPadding) + svgPadding;
-    const chip: SVGRectElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "rect"
-    );
-    chip.setAttribute("x", chipOffsetX.toString());
-    chip.setAttribute("y", svgPadding.toString());
-    chip.setAttribute("width", chipWidth.toString());
-    chip.setAttribute("height", chipHeight.toString());
-    chip.setAttribute("fill", "white");
-    chip.setAttribute("rx", borderRadius.toString());
-    chip.setAttribute("ry", borderRadius.toString());
+      const chipOffsetX = indexX * (chipWidth + svgPadding) + svgPadding;
+      const chipOffsetY = indexY * (chipHeight + svgPadding) + svgPadding;
+      const chip: SVGRectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      chip.setAttribute('x', chipOffsetX.toString());
+      chip.setAttribute('y', chipOffsetY.toString());
+      chip.setAttribute('width', chipWidth.toString());
+      chip.setAttribute('height', chipHeight.toString());
+      chip.setAttribute('fill', 'white');
+      chip.setAttribute('rx', borderRadius.toString());
+      chip.setAttribute('ry', borderRadius.toString());
 
-    const rectOffsetX =
-      index * chipWidth + index * svgPadding + (svgPadding + chipPadding);
-    const rect: SVGRectElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "rect"
-    );
-    rect.setAttribute("x", rectOffsetX.toString());
-    rect.setAttribute("y", (svgPadding + chipPadding).toString());
-    rect.setAttribute("width", swatchSize.toString());
-    rect.setAttribute("height", swatchSize.toString());
-    rect.setAttribute("fill", color);
+      const rectOffsetX = indexX * chipWidth + indexX * svgPadding + (svgPadding + chipPadding);
+      const rectOffsetY = indexY * chipHeight + indexY * svgPadding + (svgPadding + chipPadding);
+      const rect: SVGRectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', rectOffsetX.toString());
+      rect.setAttribute('y', rectOffsetY.toString());
+      rect.setAttribute('width', swatchSize.toString());
+      rect.setAttribute('height', swatchSize.toString());
+      rect.setAttribute('fill', color);
 
-    const textOffsetY =
-      textSize + svgPadding + chipPadding + swatchSize + chipPadding;
-    const text: SVGTextElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "text"
-    );
-    text.setAttribute("x", rectOffsetX.toString());
-    text.setAttribute("y", textOffsetY.toString());
-    text.setAttribute("fill", "#000");
-    text.setAttribute("font-size", textSize.toString());
-    text.setAttribute("font-weight", "600");
-    text.textContent = color;
+      const textOffsetY = rectOffsetY + textSize + swatchSize + chipPadding;
+      const text: SVGTextElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', rectOffsetX.toString()); // this will change
+      text.setAttribute('y', textOffsetY.toString()); // this will change
+      text.setAttribute('fill', '#000');
+      text.setAttribute('font-size', textSize.toString());
+      text.setAttribute('font-weight', '600');
+      text.textContent = color;
 
-    group.appendChild(chip);
-    group.appendChild(rect);
-    group.appendChild(text);
+      group.appendChild(chip);
+      group.appendChild(rect);
+      group.appendChild(text);
 
-    svg.appendChild(group);
-  });
+      svg.appendChild(group);
+    }
+  }
 
   const svgString: string = new XMLSerializer().serializeToString(svg);
 
-  try {
-    await navigator.clipboard.writeText(svgString);
-    console.log("SVG copied to clipboard successfully!");
-  } catch (err) {
-    console.error("Failed to copy SVG to clipboard:", err);
-  }
+  return svgString;
+
+  // try {
+  //   await navigator.clipboard.writeText(svgString);
+  //   console.log('SVG copied to clipboard successfully!');
+  // } catch (err) {
+  //   console.error('Failed to copy SVG to clipboard:', err);
+  // }
 }

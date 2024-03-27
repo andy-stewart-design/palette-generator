@@ -6,7 +6,11 @@ import { Close } from '@/components/icons/20';
 import classes from './component.module.css';
 import ExportPanel from './ExportPanel';
 
-export default function ExportDialog() {
+type PropTypes = {
+  colors: Array<string>;
+};
+
+export default function ExportDialog({ ...delegated }: PropTypes) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className={classes.overlay}>
@@ -19,7 +23,7 @@ export default function ExportDialog() {
               </button>
             </Dialog.Close>
           </div>
-          <ExportPanel />
+          <ExportPanel {...delegated} />
         </Dialog.Content>
       </Dialog.Overlay>
     </Dialog.Portal>

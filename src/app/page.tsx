@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: PageProps) {
             {/* <ExportButton colors={colors.hex} /> */}
             <ExportRoot>
               <ExportTrigger />
-              <ExportDialog />
+              <ExportDialog colors={colors.hex} />
             </ExportRoot>
           </section>
         </header>
