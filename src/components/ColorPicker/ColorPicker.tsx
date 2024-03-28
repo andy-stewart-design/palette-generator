@@ -19,13 +19,13 @@ type PropTypes = {
 
 export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
   const [currentColor, setCurrentColor] = useState(systemColor);
-
-  useEffect(() => {
-    if (currentColor !== systemColor) setCurrentColor(systemColor);
-  }, [systemColor, currentColor]);
-
   const params = useSearchParams();
   const router = useRouter();
+
+  // TODO: Is this useEffect necessary???
+  useEffect(() => {
+    setCurrentColor((current) => (current !== systemColor ? systemColor : current));
+  }, [systemColor]);
 
   function updateColor(color: string | { h: number; s: number; l: number }) {
     if (typeof color === 'string') {
@@ -49,7 +49,6 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     () =>
       debounce((hex: string, params: URLSearchParams) => {
         const searchParams = new URLSearchParams(params);
-        console.log(params.forEach((value, key) => console.log(key, value)));
 
         searchParams.set('color', hex.replace('#', ''));
         router.push(`/?${searchParams}`, { scroll: false });
