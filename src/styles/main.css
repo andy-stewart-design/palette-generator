@@ -7,3 +7,4 @@
 @import './base/spacing.css' layer(base);
 @import './base/borders.css' layer(base);
 @import './base/shadows.css' layer(base);
+@import './base/code.css' layer(base);

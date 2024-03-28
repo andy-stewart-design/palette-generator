@@ -91,8 +91,9 @@ function generatePaletteHTML(colorsArray: { name: string; value: string }[]): st
   const afterParagraph = document.createElement('p');
   const ul = document.createElement('ul');
 
-  beforeParagraph.textContent = ':where(:root) {';
-  afterParagraph.textContent = '}';
+  beforeParagraph.innerHTML =
+    '<span data-code-h2>:where(</span><span data-code-h3>:root</span><span data-code-h2>) {</span>';
+  afterParagraph.innerHTML = '<span data-code-h2>}</span>';
 
   containerDiv.appendChild(beforeParagraph);
 
@@ -102,8 +103,11 @@ function generatePaletteHTML(colorsArray: { name: string; value: string }[]): st
     const valueSpan = document.createElement('span');
 
     nameSpan.textContent = `${color.name}: `;
-    nameSpan.dataset.varname = '';
-    valueSpan.textContent = color.value;
+    nameSpan.setAttribute('data-code-h1', '');
+    valueSpan.innerHTML = `<span data-code-h3>#</span><span data-code-text>${color.value.replace(
+      '#',
+      ''
+    )};</span>`;
 
     li.appendChild(nameSpan);
     li.appendChild(valueSpan);
