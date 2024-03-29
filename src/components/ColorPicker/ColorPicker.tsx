@@ -24,10 +24,11 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
   const params = useSearchParams();
   const router = useRouter();
 
-  // TODO: Is this useEffect necessary???
-  // useEffect(() => {
-  //   setCurrentColor((current) => (current !== systemColor ? systemColor : current));
-  // }, [systemColor]);
+  // This makes sure the HSL sliders are updated when the search input is used
+  // there might be a better way to do this
+  useEffect(() => {
+    setCurrentColor((current) => (current !== systemColor ? systemColor : current));
+  }, [systemColor]);
 
   useSetDocumentStyle(cssVariables);
 
@@ -45,11 +46,11 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
-      debouncedUpdateURL(hex, params);
+      updateURL(hex, params);
     }
   }
 
-  const debouncedUpdateURL = useMemo(
+  const updateURL = useMemo(
     () =>
       debounce((hex: string, params: URLSearchParams) => {
         const searchParams = new URLSearchParams(params);
