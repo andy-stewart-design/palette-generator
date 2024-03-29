@@ -5,11 +5,11 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { generateSVG } from '@/utils/generate-svg';
 import { generateCSSVariables } from '@/utils/generate-color-names';
 import { copyToClipboard } from '@/utils/copy-to-clipboard';
-import { downloadFile } from '@/utils/download-file';
+import { downloadFile, type ExportFiletype } from '@/utils/download-file';
 import { tabContent, type TabValue } from './tab-content';
+import Button from '@/components/base/Button';
 import type { Okhsl } from 'culori';
 import classes from './component.module.css';
-import Button from '@/components/base/Button';
 
 type PropTypes = {
   colors: {
@@ -22,7 +22,7 @@ type PropTypes = {
 export default function ExportPanel({ colors }: PropTypes) {
   const [value, setValue] = useState<TabValue>('figma');
 
-  const generated = generateHTML(value, colors);
+  const exported = generateExport(value, colors);
 
   return (
     <Tabs.Root
@@ -50,13 +50,16 @@ export default function ExportPanel({ colors }: PropTypes) {
         {tabContent.map((tab) => (
           <Tabs.Content key={tab.value} value={tab.value} asChild>
             <div className={`${classes.panel} ${classes[tab.value]}`}>
-              <div dangerouslySetInnerHTML={{ __html: generated.htmlString }} />
+              <div dangerouslySetInnerHTML={{ __html: exported.htmlString }} />
             </div>
           </Tabs.Content>
         ))}
         <div className={classes.export}>
-          <Button onClick={() => copyToClipboard(generated.copyString)}>Copy</Button>
-          <Button variant="secondary" onClick={() => downloadFile(generated.copyString)}>
+          <Button onClick={() => copyToClipboard(exported.copyString)}>Copy</Button>
+          <Button
+            variant="secondary"
+            onClick={() => downloadFile(exported.copyString, exported.type)}
+          >
             Download
           </Button>
         </div>
@@ -65,23 +68,33 @@ export default function ExportPanel({ colors }: PropTypes) {
   );
 }
 
-function generateHTML(
+type GenerateExportReturn = {
+  type: ExportFiletype;
+  htmlString: string;
+  copyString: string;
+};
+
+function generateExport(
   type: TabValue,
   colors: {
     raw: Okhsl[];
     hex: string[];
     intergerName: number[];
   }
-) {
+): GenerateExportReturn {
   if (type === 'figma') {
-    return { type, htmlString: generateSVG(colors.hex), copyString: generateSVG(colors.hex) };
+    return {
+      type: 'svg',
+      htmlString: generateSVG(colors.hex),
+      copyString: generateSVG(colors.hex),
+    };
   } else {
     const primitiveVariables = generateCSSVariables({ type: 'primitive', colors });
     const cssVarNames = Object.keys(primitiveVariables);
     const cssVarValues = Object.values(primitiveVariables);
     const colorsArray = cssVarNames.map((name, i) => ({ name, value: cssVarValues[i] }));
     return {
-      type,
+      type: 'css',
       htmlString: generatePaletteHTML(colorsArray),
       copyString: generatePaletteCopyString(colorsArray),
     };
@@ -124,8 +137,12 @@ function generatePaletteHTML(colorsArray: { name: string; value: string }[]): st
 }
 
 function generatePaletteCopyString(colorsArray: { name: string; value: string }[]): string {
-  return colorsArray
+  const openingTag = ':where(:root) {';
+  const closingTag = '}';
+  const vars = colorsArray
     .map((color) => `${color.name}: ${color.value};`)
     .join('\n')
     .trim();
+
+  return [openingTag, vars, closingTag].join('\n').trim();
 }
