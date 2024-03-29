@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import SearchInput from '@/components/ColorPicker/SearchInput';
-import HSLInputs from '@/components/ColorPicker/HSLInputs';
 import { formatHex, type Color, type Okhsl } from 'culori';
 import debounce from 'just-debounce-it';
+import SearchInput from '@/components/ColorPicker/SearchInput';
+import HSLInputs from '@/components/ColorPicker/HSLInputs';
+import { useSetDocumentStyle } from '@/hooks/use-set-document-style';
 import classes from './component.module.css';
 
 type PropTypes = {
@@ -15,9 +16,10 @@ type PropTypes = {
     intergerName: number;
     name: string;
   };
+  cssVariables: Record<string, string>;
 };
 
-export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
+export default function ColorPicker({ currentColor: systemColor, cssVariables }: PropTypes) {
   const [currentColor, setCurrentColor] = useState(systemColor);
   const params = useSearchParams();
   const router = useRouter();
@@ -26,6 +28,8 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
   useEffect(() => {
     setCurrentColor((current) => (current !== systemColor ? systemColor : current));
   }, [systemColor]);
+
+  useSetDocumentStyle(cssVariables);
 
   function updateColor(color: string | { h: number; s: number; l: number }) {
     if (typeof color === 'string') {
@@ -63,6 +67,13 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     l: currentColor.raw.l,
   });
 
+  const primarySaturated = formatHex({
+    mode: 'okhsl',
+    h: currentColor.raw.h ?? 0,
+    s: 1,
+    l: currentColor.raw.l,
+  });
+
   const primaryMedium = formatHex({
     mode: 'okhsl',
     h: currentColor.raw.h ?? 0,
@@ -74,7 +85,7 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     <div
       className={classes.wrapper}
       style={{
-        '--color-primary': currentColor.hex,
+        '--color-primary-saturated': primarySaturated,
         '--color-primary-desaturated': primaryDesaturated,
         '--color-primary-medium': primaryMedium,
       }}

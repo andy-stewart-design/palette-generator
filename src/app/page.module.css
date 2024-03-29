@@ -8,12 +8,13 @@
 .header {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--white);
   box-shadow: var(--shadow-elevation-2);
   z-index: 100;
 }
 
 .section {
+  display: grid;
   padding-inline: var(--space-16);
   padding-block: var(--space-32);
   border-bottom: 1px solid rgb(0 0 0 / 0.1);

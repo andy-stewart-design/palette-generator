@@ -1,15 +1,15 @@
 // TODO: Update export options
-// -clean up functino implementation
-// - Add export modes: CSS Variables, Tailwind (v4+ & v3), Figma, Swift UI?
-// - For CSS/TW, add ability to select color mode
+// - Update download function to work for all export types
+// - Clean up function implementation
+// - Add export modes: Tailwind (< v.3), JSON (W3C), Swift UI?
 
 // TODO: Hit + Likes Counter (using turso)
 // TODO: Toast Messages
 // TODO: Copy individual colors by clicking on hex value
-// TODO: Persist last color with cookies
 // TODO: Add color accessibility grid
+// TODO: Add ability to select color spaces and models
 // TODO: Add ability to do color palettes as well as color spectra
-// TODO: P3 Colors
+// TODO: Persist last color with cookies
 // TODO: Improve performance of saturated yellow hues
 
 import Providers from '@/components/Providers';
@@ -34,20 +34,15 @@ export default async function Home({ searchParams }: PageProps) {
   const { colors, keyColor, keyIndex } = colorObject;
 
   const primitiveVariables = generateCSSVariables({ type: 'primitive', colors });
-  const semanticVariables = generateCSSVariables({ type: 'semantic', color: keyColor, colors });
+  const semanticVariables = generateCSSVariables({ type: 'semantic', color: keyColor });
+  const cssVariables = { ...primitiveVariables, ...semanticVariables };
 
   return (
     <Providers keyIndex={keyIndex}>
-      <main
-        className={classes.main}
-        style={{
-          ...primitiveVariables,
-          ...semanticVariables,
-        }}
-      >
+      <main className={classes.main} style={cssVariables}>
         <header className={classes.header}>
           <section className={classes.section}>
-            <ColorPicker currentColor={keyColor} />
+            <ColorPicker currentColor={keyColor} cssVariables={cssVariables} />
           </section>
           <section className={classes.section}>
             <KeyIndexController key={keyIndex.current} max={stepsParam} />

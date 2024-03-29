@@ -15,7 +15,7 @@
 
   text-align: center;
   font-weight: 500;
-  color: var(--color-primary-100);
+  color: var(--color-primary-lighter);
 
   transition: scale var(--tansition-duration) var(--tansition-easing),
     background var(--tansition-duration) var(--tansition-easing);

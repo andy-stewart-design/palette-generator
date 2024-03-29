@@ -104,11 +104,6 @@ type GenerateSemanticCSSVariablesProps = {
     intergerName: number;
     name: string;
   };
-  colors: {
-    raw: Okhsl[];
-    hex: string[];
-    intergerName: number[];
-  };
 };
 
 type GenerateCSSVariablesProps =
@@ -117,38 +112,34 @@ type GenerateCSSVariablesProps =
 
 export function generateCSSVariables(props: GenerateCSSVariablesProps) {
   if (props.type === 'semantic') {
-    const { color, colors } = props;
+    const { color } = props;
 
-    const primaryDesaturated = formatHex({
-      mode: 'okhsl',
-      h: color.raw.h,
-      s: 0,
-      l: color.raw.l,
-    });
+    const { l } = color.raw;
+    const h = color.raw.h ?? 0;
+    const mode = 'okhsl';
 
-    const primaryMedium = formatHex({
-      mode: 'okhsl',
-      h: color.raw.h,
-      s: 0.8,
-      l: 0.6,
-    });
+    const primary = formatHex({ mode, h, s: 0.95, l: 0.475 });
+    const primaryLight = formatHex({ mode, h, s: 0.9, l: 0.95 });
+    const primaryLighter = formatHex({ mode, h, s: 0.9, l: 0.85 });
+    const primaryDark = formatHex({ mode, h, s: 0.9, l: 0.12 });
+    const primaryDarker = formatHex({ mode, h, s: 0.9, l: 0.2 });
+    const primaryDesaturated = formatHex({ mode, h, s: 0, l });
+    const codeHighlight2 = formatHex({ mode, h: h + 45, s: 0.95, l: 0.5 });
+    const codeHighlight3 = formatHex({ mode, h: h - 45, s: 0.95, l: 0.5 });
 
     return {
-      '--color-primary': color.hex,
-      '--color-primary-light': colors.hex.at(0)!,
-      '--color-primary-lighter': colors.hex.at(1)!,
-      '--color-primary-dark': colors.hex.at(-2)!,
-      '--color-primary-darker': colors.hex.at(-1)!,
+      '--color-primary': primary,
+      '--color-primary-light': primaryLight,
+      '--color-primary-lighter': primaryLighter,
+      '--color-primary-dark': primaryDark,
+      '--color-primary-darker': primaryDarker,
       '--color-primary-desaturated': primaryDesaturated,
-      '--color-primary-medium': primaryMedium,
+      '--code-highlight-1': primary,
+      '--code-highlight-2': codeHighlight2,
+      '--code-highlight-3': codeHighlight3,
     };
   } else {
     const { colors } = props;
-    if (colors.hex.length !== colors.intergerName.length) {
-      throw new Error(
-        `The amount of colors (${colors.hex.length}) is not equal to the amount of numbers (${colors.intergerName.length})`
-      );
-    }
 
     const variables = colors.hex.reduce((acc, color, index) => {
       const key = `--color-primary-${colors.intergerName[index]}`;

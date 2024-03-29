@@ -9,6 +9,7 @@ import { downloadFile } from '@/utils/download-file';
 import { tabContent, type TabValue } from './tab-content';
 import type { Okhsl } from 'culori';
 import classes from './component.module.css';
+import Button from '@/components/base/Button';
 
 type PropTypes = {
   colors: {
@@ -54,8 +55,10 @@ export default function ExportPanel({ colors }: PropTypes) {
           </Tabs.Content>
         ))}
         <div className={classes.export}>
-          <button onClick={() => copyToClipboard(generated.copyString)}>Copy</button>
-          <button onClick={() => downloadFile(generated.copyString)}>Download</button>
+          <Button onClick={() => copyToClipboard(generated.copyString)}>Copy</Button>
+          <Button variant="secondary" onClick={() => downloadFile(generated.copyString)}>
+            Download
+          </Button>
         </div>
       </div>
     </Tabs.Root>

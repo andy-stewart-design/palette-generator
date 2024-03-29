@@ -30,7 +30,7 @@
   --track-background: linear-gradient(
     to right in oklch,
     var(--color-primary-desaturated),
-    var(--color-primary) 80%
+    var(--color-primary-saturated) 80%
   );
 }
 
