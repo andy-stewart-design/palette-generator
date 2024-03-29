@@ -1,3 +1,4 @@
+// TODO: Fix SearchInput Swatch
 // TODO: Update export options
 // - Update download function to work for all export types
 // - Clean up function implementation

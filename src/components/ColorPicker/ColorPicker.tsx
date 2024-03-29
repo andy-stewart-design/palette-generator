@@ -25,9 +25,9 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
   const router = useRouter();
 
   // TODO: Is this useEffect necessary???
-  useEffect(() => {
-    setCurrentColor((current) => (current !== systemColor ? systemColor : current));
-  }, [systemColor]);
+  // useEffect(() => {
+  //   setCurrentColor((current) => (current !== systemColor ? systemColor : current));
+  // }, [systemColor]);
 
   useSetDocumentStyle(cssVariables);
 
@@ -45,11 +45,11 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
-      updateURL(hex, params);
+      debouncedUpdateURL(hex, params);
     }
   }
 
-  const updateURL = useMemo(
+  const debouncedUpdateURL = useMemo(
     () =>
       debounce((hex: string, params: URLSearchParams) => {
         const searchParams = new URLSearchParams(params);
@@ -85,6 +85,7 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
     <div
       className={classes.wrapper}
       style={{
+        '--color-primary': currentColor.hex,
         '--color-primary-saturated': primarySaturated,
         '--color-primary-desaturated': primaryDesaturated,
         '--color-primary-medium': primaryMedium,
