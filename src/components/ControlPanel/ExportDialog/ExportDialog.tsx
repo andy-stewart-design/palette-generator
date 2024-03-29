@@ -4,15 +4,11 @@ import React, { ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import ExportPanel from './ExportPanel';
 import { Close } from '@/components/icons/20';
-import type { Okhsl } from 'culori';
+import type { ExportedColors } from '@/utils/code/generate-code';
 import classes from './component.module.css';
 
 type PropTypes = {
-  colors: {
-    raw: Okhsl[];
-    hex: string[];
-    intergerName: number[];
-  };
+  colors: ExportedColors;
 };
 
 export default function ExportDialog({ ...delegated }: PropTypes) {

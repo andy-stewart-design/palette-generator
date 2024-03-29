@@ -14,6 +14,54 @@ export function generateSVG(hexColors: string[]) {
   const svgWidth = columns * chipWidth + (columns + 1) * svgPadding;
   const svgHeight = rows * chipHeight + (rows + 1) * svgPadding;
 
+  let svg = `<svg width="${svgWidth}px" height="${svgHeight}px" xmlns="http://www.w3.org/2000/svg">`;
+
+  for (let indexY = 0; indexY < rows; indexY++) {
+    for (let indexX = 0; indexX < columns; indexX++) {
+      const index = indexY * columns + indexX;
+      if (index >= numCards) break;
+
+      const color = hexColors[index];
+
+      const chipOffsetX = indexX * (chipWidth + svgPadding) + svgPadding;
+      const chipOffsetY = indexY * (chipHeight + svgPadding) + svgPadding;
+
+      svg += `<g>`;
+      svg += `<rect x="${chipOffsetX}" y="${chipOffsetY}" width="${chipWidth}" height="${chipHeight}" fill="white" rx="${borderRadius}" ry="${borderRadius}"/>`;
+
+      const rectOffsetX = indexX * chipWidth + indexX * svgPadding + (svgPadding + chipPadding);
+      const rectOffsetY = indexY * chipHeight + indexY * svgPadding + (svgPadding + chipPadding);
+
+      svg += `<rect x="${rectOffsetX}" y="${rectOffsetY}" width="${swatchSize}" height="${swatchSize}" fill="${color}"/>`;
+
+      const textOffsetY = rectOffsetY + textSize + swatchSize + chipPadding;
+      svg += `<text x="${rectOffsetX}" y="${textOffsetY}" fill="#000" font-size="${textSize}" font-weight="600">${color}</text>`;
+
+      svg += `</g>`;
+    }
+  }
+
+  svg += `</svg>`;
+
+  return svg;
+}
+
+export function generateSVGRaw(hexColors: string[]) {
+  const chipWidth = 112;
+  const chipHeight = 136;
+  const chipPadding = 8;
+  const swatchSize = 96;
+  const textSize = 10;
+  const borderRadius = 8;
+
+  const numCards = hexColors.length;
+  const columns = numCards < 4 ? numCards : Math.floor(numCards / 10) + 4;
+  const rows = Math.ceil(numCards / columns);
+
+  const svgPadding = 8;
+  const svgWidth = columns * chipWidth + (columns + 1) * svgPadding;
+  const svgHeight = rows * chipHeight + (rows + 1) * svgPadding;
+
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('width', `${svgWidth}px`);
   svg.setAttribute('height', `${svgHeight}px`);

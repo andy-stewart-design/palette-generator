@@ -1,10 +1,8 @@
 // TODO: Update export options
-// - Update download function to work for all export types
-// - Clean up function implementation
-// - Add export modes: Tailwind (< v.3), JSON (W3C), Swift UI?
+// - Add export modes: Tailwind (< v.3), JSON (W3C)
+// TODO: Toast Messages
 
 // TODO: Hit + Likes Counter (using turso)
-// TODO: Toast Messages
 // TODO: Copy individual colors by clicking on hex value
 // TODO: Add color accessibility grid
 // TODO: Add ability to select color spaces and models
@@ -20,6 +18,7 @@ import StepsController from '@/components/ControlPanel/StepsController';
 import ExportDialog, { ExportRoot, ExportTrigger } from '@/components/ControlPanel/ExportDialog';
 import { generateSpectrum } from '@/utils/generate-spectrum';
 import { generateCSSVariables } from '@/utils/generate-color-names';
+import { generateCode } from '@/utils/code';
 import type { ServerSideComponentProp } from '@/types/server-components';
 import classes from './page.module.css';
 
@@ -36,6 +35,8 @@ export default async function Home({ searchParams }: PageProps) {
   const primitiveVariables = generateCSSVariables({ type: 'primitive', colors });
   const semanticVariables = generateCSSVariables({ type: 'semantic', color: keyColor });
   const cssVariables = { ...primitiveVariables, ...semanticVariables };
+
+  const exportedColors = generateCode({ colors: colors.hex, intergerName: colors.intergerName });
 
   return (
     <Providers keyIndex={keyIndex}>
@@ -54,7 +55,7 @@ export default async function Home({ searchParams }: PageProps) {
           <section className={classes.section}>
             <ExportRoot>
               <ExportTrigger />
-              <ExportDialog colors={colors} />
+              <ExportDialog colors={exportedColors} />
             </ExportRoot>
           </section>
         </header>
