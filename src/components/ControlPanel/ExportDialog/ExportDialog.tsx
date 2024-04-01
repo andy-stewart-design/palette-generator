@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import ExportPanel from './ExportPanel';
 import { Close } from '@/components/icons/20';
-import type { ExportedColors } from '@/utils/code/generate-code';
+import type { ExportedColors } from '@/utils/code/generate-export';
 import classes from './component.module.css';
 
 type PropTypes = {

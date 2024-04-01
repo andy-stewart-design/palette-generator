@@ -6,7 +6,7 @@ import { copyToClipboard } from '@/utils/copy-to-clipboard';
 import { downloadFile } from '@/utils/download-file';
 import { tabContent, type TabValue } from './tab-content';
 import Button from '@/components/base/Button';
-import type { ExportedColors } from '@/utils/code/generate-code';
+import type { ExportedColors } from '@/utils/code/generate-export';
 import classes from './component.module.css';
 
 type PropTypes = {
@@ -49,12 +49,14 @@ export default function ExportPanel({ colors }: PropTypes) {
           </Tabs.Content>
         ))}
         <div className={classes.export}>
-          <Button onClick={() => copyToClipboard(activeExport.copyString)}>Copy</Button>
+          <Button onClick={() => copyToClipboard(activeExport.copyString)}>
+            Copy {activeExport.language.toLocaleUpperCase()}
+          </Button>
           <Button
             variant="secondary"
             onClick={() => downloadFile(activeExport.copyString, activeExport.language)}
           >
-            Download
+            Download {activeExport.language.toLocaleUpperCase()}
           </Button>
         </div>
       </div>

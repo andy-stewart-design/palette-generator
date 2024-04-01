@@ -12,12 +12,12 @@ export const tabContent = [
   {
     label: 'Tailwind (pre v.4)',
     value: 'tw-classic',
-    disabled: true,
+    disabled: false,
   },
   {
-    label: 'JSON (W3C)',
+    label: 'Tokens (W3C)',
     value: 'json-w3c',
-    disabled: true,
+    disabled: false,
   },
 ];
 
