@@ -3,7 +3,20 @@
   backdrop-filter: blur(var(--space-4));
   position: fixed;
   inset: 0;
-  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &[data-state='open'] {
+    animation-name: exportOverlayShow;
+    animation-duration: 400ms;
+    animation-timing-function: var(--ease-out-5);
+    animation-fill-mode: forwards;
+  }
+
+  &[data-state='closed'] {
+    animation-name: exportOverlayHide;
+    animation-duration: 300ms;
+    animation-timing-function: var(--ease-out-3);
+    animation-fill-mode: forwards;
+  }
 }
 
 .dialog {
@@ -19,9 +32,24 @@
   width: 90vw;
   max-width: 55rem;
   height: 75vh;
-  /* padding-block-start: var(--space-60); */
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   overflow-y: scroll;
+  animation-delay: 100ms;
+  opacity: 0;
+
+  &[data-state='open'] {
+    animation-name: exportDialogShow;
+    animation-duration: 300ms;
+    animation-timing-function: var(--ease-out-5);
+    animation-fill-mode: forwards;
+  }
+
+  &[data-state='closed'] {
+    animation-delay: 0ms;
+    animation-name: exportDialogHide;
+    animation-duration: 300ms;
+    animation-timing-function: var(--ease-out-3);
+    animation-fill-mode: forwards;
+  }
 }
 
 .header {
@@ -48,10 +76,6 @@
 }
 
 .close {
-  /* position: absolute;
-  top: var(--space-16);
-  right: var(--space-16); */
-
   display: grid;
   place-items: center;
 
@@ -59,22 +83,36 @@
   width: var(--space-32);
 }
 
-@keyframes overlayShow {
+@keyframes exportOverlayShow {
   from {
     opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
-@keyframes contentShow {
+@keyframes exportOverlayHide {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes exportDialogShow {
   from {
     opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
+    transform: translate(-50%, calc(-50% + var(--space-32))) scale(0.9);
   }
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes exportDialogHide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
   }
 }
