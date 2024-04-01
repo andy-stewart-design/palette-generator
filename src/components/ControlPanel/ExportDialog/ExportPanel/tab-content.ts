@@ -1,4 +1,12 @@
-export const tabContent = [
+export type TabValue = 'figma' | 'css-vars' | 'tw-classic' | 'w3c-tokens';
+
+export type ExportTypeTab = {
+  label: string;
+  value: TabValue;
+  disabled: boolean;
+};
+
+export const tabContent: Array<ExportTypeTab> = [
   {
     label: 'Figma',
     value: 'figma',
@@ -16,9 +24,7 @@ export const tabContent = [
   },
   {
     label: 'Tokens (W3C)',
-    value: 'json-w3c',
+    value: 'w3c-tokens',
     disabled: false,
   },
 ];
-
-export type TabValue = 'figma' | 'css-vars' | 'tw-classic' | 'json-w3c';

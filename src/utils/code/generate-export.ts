@@ -45,7 +45,7 @@ export function generateExport({ colors, intergerName }: CodeProps): ExportedCol
   const w3cCopyString = generateW3CTokens(colors, intergerName);
   const w3c: ExportedColor = {
     language: 'json',
-    format: 'json-w3c',
+    format: 'w3c-tokens',
     htmlString: highlightCode(w3cCopyString, 'json'),
     copyString: w3cCopyString,
   };
