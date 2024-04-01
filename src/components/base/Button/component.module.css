@@ -1,5 +1,5 @@
 .button {
-  --tansition-duration: 100ms;
+  --tansition-duration: 150ms;
   --tansition-easing: var(--ease-out-3);
 
   display: flex;
@@ -24,7 +24,8 @@
       background var(--tansition-duration) var(--tansition-easing),
       color var(--tansition-duration) var(--tansition-easing);
 
-    &:active {
+    &:active,
+    &[data-active] {
       background: var(--color-primary);
       color: var(--white);
     }
@@ -38,7 +39,8 @@
       border var(--tansition-duration) var(--tansition-easing),
       color var(--tansition-duration) var(--tansition-easing);
 
-    &:active {
+    &:active,
+    &[data-active] {
       border: 1.5px solid var(--color-primary);
       color: var(--color-primary);
     }

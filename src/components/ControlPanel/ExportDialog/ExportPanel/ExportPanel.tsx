@@ -15,6 +15,8 @@ type PropTypes = {
 
 export default function ExportPanel({ colors }: PropTypes) {
   const [value, setValue] = useState<TabValue>('figma');
+  const [isCopied, setIsCopied] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
 
   const activeExport = colors.filter((c) => c.format === value)[0];
 
@@ -49,14 +51,26 @@ export default function ExportPanel({ colors }: PropTypes) {
           </Tabs.Content>
         ))}
         <div className={classes.export}>
-          <Button onClick={() => copyToClipboard(activeExport.copyString)}>
-            Copy {activeExport.language.toLocaleUpperCase()}
+          <Button
+            onClick={() => {
+              copyToClipboard(activeExport.copyString);
+              setIsCopied(true);
+              setTimeout(() => setIsCopied(false), 1500);
+            }}
+            isActive={isCopied}
+          >
+            {isCopied ? 'Copied!' : `Copy ${activeExport.language.toLocaleUpperCase()}`}
           </Button>
           <Button
             variant="secondary"
-            onClick={() => downloadFile(activeExport.copyString, activeExport.language)}
+            onClick={() => {
+              downloadFile(activeExport.copyString, activeExport.language);
+              setIsDownloaded(true);
+              setTimeout(() => setIsDownloaded(false), 1500);
+            }}
+            isActive={isDownloaded}
           >
-            Download {activeExport.language.toLocaleUpperCase()}
+            {isDownloaded ? 'Saved!' : `Download ${activeExport.language.toLocaleUpperCase()}`}
           </Button>
         </div>
       </div>

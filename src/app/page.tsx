@@ -1,4 +1,4 @@
-// TODO: Toast Messages
+// TODO: redo modal animations
 // TODO: Add ability to manually adjust min and max brightness
 
 // TODO: Hit + Likes Counter (using turso)
