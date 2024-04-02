@@ -46,11 +46,11 @@ export default function ColorPicker({ currentColor: systemColor, cssVariables }:
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
-      updateURL(hex, params);
+      updateURLDebounced(hex, params);
     }
   }
 
-  const updateURL = useMemo(
+  const updateURLDebounced = useMemo(
     () =>
       debounce((hex: string, params: URLSearchParams) => {
         const searchParams = new URLSearchParams(params);

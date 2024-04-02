@@ -4,7 +4,7 @@ import ControllerWrapper from '../ControllerWrapper';
 import Label from '@/components/base/Label';
 import NumberInput from '@/components/base/NumberInput';
 import { Locked, Undo, Unlocked } from '@/components/icons/16';
-import { useKeyColorContext } from '@/components/Providers';
+import { useKeyIndexContext } from '@/components/Providers';
 import classes from './component.module.css';
 import VisuallyHidden from '@/components/base/VisuallyHidden';
 
@@ -13,7 +13,7 @@ type PropTypes = {
 };
 
 export default function KeyIndexController({ max }: PropTypes) {
-  const { keyIndex, updateKeyIndex, isLocked, toggleIsLocked } = useKeyColorContext();
+  const { keyIndex, updateKeyIndex, isLocked, toggleIsLocked } = useKeyIndexContext();
 
   const resetIndex = () => updateKeyIndex(-1);
 

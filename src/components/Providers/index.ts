@@ -1,2 +1,2 @@
-export { default } from './Providers'
-export { useKeyColorContext } from './KeyColorProvider'
+export { default } from './Providers';
+export { useKeyIndexContext } from './KeyIndexProvider';

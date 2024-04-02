@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { forwardRef } from "react";
-import { motion } from "framer-motion";
-import ColorCardButton from "./ColorCardButton";
-import { useKeyColorContext } from "@/components/Providers";
-import classes from "./component.module.css";
+import { forwardRef } from 'react';
+import { motion } from 'framer-motion';
+import ColorCardButton from './ColorCardButton';
+import { useKeyIndexContext } from '@/components/Providers';
+import classes from './component.module.css';
 
 type PageProps = {
   color: string;
@@ -15,11 +15,9 @@ type PageProps = {
 
 const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
   const { color, index, numItems, name } = props;
-  const { keyIndex } = useKeyColorContext();
+  const { keyIndex } = useKeyIndexContext();
   const isActive = index === keyIndex.current;
-  const boxShadow = `0 3px 8px -2px rgba(0 0 0 / ${
-    (index + 1) * 0.025 + 0.15
-  })`;
+  const boxShadow = `0 3px 8px -2px rgba(0 0 0 / ${(index + 1) * 0.025 + 0.15})`;
 
   return (
     <motion.div
@@ -27,10 +25,10 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
       layout={true}
       exit={{ opacity: 0, transition: { duration: 1 } }}
       className={`${classes.card} color-card`}
-      data-state={isActive ? "on" : "off"}
+      data-state={isActive ? 'on' : 'off'}
       style={{
-        "--background-color": color,
-        "--box-shadow": boxShadow,
+        '--background-color': color,
+        '--box-shadow': boxShadow,
         zIndex: isActive ? 100000 : 30 - index,
       }}
     >
@@ -44,6 +42,6 @@ const ColorCard = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
   );
 });
 
-ColorCard.displayName = "ColorCard";
+ColorCard.displayName = 'ColorCard';
 
 export default ColorCard;

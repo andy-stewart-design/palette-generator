@@ -1,1 +1,0 @@
-export { default, useKeyColorContext } from './KeyColorProvider'
