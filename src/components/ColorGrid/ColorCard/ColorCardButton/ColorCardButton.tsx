@@ -1,42 +1,45 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { Locked, Unlocked } from "@/components/icons/16";
+import { useKeyColorContext } from "@/components/Providers";
 import classes from "./component.module.css";
 
 type PageProps = {
   index: number;
-  disabled: boolean;
+  keyIndex: {
+    current: number;
+    generated: number;
+  };
+  isActive: boolean;
 };
 
-export default function ColorCardButton({ index, disabled }: PageProps) {
-  const router = useRouter();
-  const params = useSearchParams();
+export default function ColorCardButton({ index, isActive }: PageProps) {
+  const { updateKeyIndex, isLocked, toggleIsLocked } = useKeyColorContext();
 
-  function handleClick() {
-    const searchParams = new URLSearchParams(params);
-    searchParams.set("anchor", index.toString());
-    router.push(`/?${searchParams}`, { scroll: false });
-  }
+  const setKeyColor = () => updateKeyIndex(index);
 
   return (
-    <button
-      className={classes.button}
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      <div>
-        {/* <svg
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
+    <>
+      {isActive && (
+        <motion.button
+          layoutId="key-index-button"
+          className={`${classes.button} ${classes.primary}`}
+          onClick={toggleIsLocked}
+          data-locked={isLocked ? "" : undefined}
         >
-          <path d="M22 12H16M8 12H2M12 8V2M12 22V16" />
-        </svg> */}
-        {!disabled ? "Update Key Color" : "Key Color"}
-      </div>
-    </button>
+          <span>{isLocked ? <Locked /> : <Unlocked />}</span>
+          Key Color
+        </motion.button>
+      )}
+      {!isActive && !isLocked && (
+        <motion.button
+          className={`${classes.button} ${classes.secondary}`}
+          onClick={setKeyColor}
+        >
+          Set Key
+        </motion.button>
+      )}
+    </>
   );
 }

@@ -1,17 +1,14 @@
 .input {
-  width: 100%;
+  inline-size: 100%;
   flex: 1 0 0;
   accent-color: var(--color-primary);
 
   /* from lexicons  */
 
-  --slider-height: var(--space-2xl);
-  --slider-height: 1.5rem;
+  --slider-height: var(--space-24);
 
-  --track-height: var(--slider-height);
-  --track-height: 1rem;
-  --track-border-radius: var(--border-radius);
-  --track-border-radius: 8px;
+  --track-height: var(--space-16);
+  --track-border-radius: var(--brad-full);
   --track-fill-color-start: var(--color-primary);
   --track-fill-color-end: var(--color-primary);
   --track-background-color: var(--color-primary-100);
@@ -23,14 +20,13 @@
     var(--track-background-color, blue) var(--slider-progress)
   );
 
-  --thumb-width: var(--space-3);
-  --thumb-width: 1rem;
+  --thumb-width: var(--space-16);
   --thumb-height: var(--thumb-width);
   --thumb-offset: calc((var(--thumb-height) - var(--track-height)) / 2 * -1);
   --thumb-color: transparent;
-  --thumb-color: white;
+  --thumb-color: var(--white);
   --thumb-border: 2px solid var(--color-primary);
-  --thumb-border-radius: 100vmax;
+  --thumb-border-radius: var(--brad-full);
   --thumb-shadow: none;
   --thumb-filter: none;
 
@@ -38,16 +34,15 @@
 
   position: relative;
   flex-grow: 1;
-  height: var(--slider-height);
-  width: 100%;
+  block-size: var(--slider-height);
+  inline-size: 100%;
 
   background-color: transparent;
   border: var(--border);
   border-radius: var(--border-radius);
 
   overflow: hidden;
-  transition: background-color 0.25s var(--ease-out-3),
-    border 0.25s var(--ease-out-3);
+  transition: background-color 0.25s var(--ease-out-3), border 0.25s var(--ease-out-3);
 
   cursor: pointer;
 
@@ -68,8 +63,8 @@
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: var(--thumb-height);
-    width: var(--thumb-width);
+    block-size: var(--thumb-height);
+    inline-size: var(--thumb-width);
     border: var(--thumb-border);
     border-radius: var(--thumb-border-radius);
     background: var(--thumb-color);
@@ -80,8 +75,8 @@
   }
 
   &::-moz-range-thumb {
-    height: var(--thumb-hight);
-    width: var(--thumb-width);
+    block-size: var(--thumb-hight);
+    inline-size: var(--thumb-width);
     border: var(--thumb-border);
     border-radius: var(--thumb-border-radius);
     background: var(--thumb-color);
@@ -91,13 +86,13 @@
   }
 
   &::-webkit-slider-runnable-track {
-    height: var(--track-height);
+    block-size: var(--track-height);
     background: var(--track-background);
     border-radius: var(--track-border-radius);
   }
 
   &::-moz-range-track {
-    height: var(--track-height);
+    block-size: var(--track-height);
     background: var(--track-background);
     border-radius: var(--track-border-radius);
   }
@@ -106,11 +101,6 @@
     &::-webkit-slider-runnable-track,
     &::-moz-range-track {
       background: oklch(var(--gray-700-oklch) / 40%);
-    }
-
-    & + input[type="number"] {
-      background: transparent;
-      border: 1px solid oklch(var(--white-oklch) / 8%);
     }
   }
 }

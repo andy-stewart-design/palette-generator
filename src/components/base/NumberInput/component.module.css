@@ -1,0 +1,61 @@
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 0.5rem;
+}
+
+.label {
+  font-size: var(--space-13);
+  font-weight: 500;
+}
+
+.container {
+  flex: 1 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input {
+  flex: 0 0 var(--space-48);
+  background: transparent;
+  border-right: 0;
+  border-radius: var(--brad);
+  padding-inline: var(--space-6);
+  padding-block: var(--space-4);
+  block-size: var(--space-32);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    background-color: var(--color-primary-100);
+  }
+}
+
+.button {
+  --lightness: 50%;
+
+  flex: 0 0 var(--space-32);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--space-32);
+  block-size: var(--space-32);
+  background: transparent;
+  border: 1px solid oklch(var(--black-oklch) / 10%);
+  border-radius: var(--brad-full);
+  transition: background 200ms var(--ease-out-3);
+
+  &:not(:disabled):hover {
+    --lightness: 60%;
+    background: var(--color-primary-100);
+  }
+}

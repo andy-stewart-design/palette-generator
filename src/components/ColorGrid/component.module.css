@@ -4,5 +4,5 @@
   flex-direction: column;
   isolation: isolate;
   background: var(--color-primary-dark);
-  transition: background 500ms ease-out;
+  transition: background 500ms var(--ease-out-3);
 }

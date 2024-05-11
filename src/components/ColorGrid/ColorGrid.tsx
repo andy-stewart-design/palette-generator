@@ -1,15 +1,13 @@
-"use client";
-
 import ColorCard from "./ColorCard";
-import { AnimatePresence } from "framer-motion";
+import AnimatePresence from "@/components/AnimatePresence";
 import classes from "./component.module.css";
 
 type PropTypes = {
   colors: Array<string>;
-  keyIndex: number;
+  names: Array<number>;
 };
 
-export default function ColorGrid({ keyIndex, colors }: PropTypes) {
+export default function ColorGrid({ colors, names }: PropTypes) {
   return (
     <section className={classes.grid}>
       <AnimatePresence mode={"popLayout"} initial={false}>
@@ -17,8 +15,8 @@ export default function ColorGrid({ keyIndex, colors }: PropTypes) {
           <ColorCard
             key={index}
             color={color}
+            name={names[index]}
             index={index}
-            isActive={index === keyIndex}
             numItems={colors.length}
           />
         ))}

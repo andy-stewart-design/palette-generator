@@ -1,42 +1,48 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import SearchInput from "@/components/SearchInput";
-import HSLInputs from "@/components/HSLInputs";
-import { formatHex, type Color, type Okhsl } from "culori";
-import debounce from "just-debounce-it";
-import classes from "./component.module.css";
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { formatHex, type Color, type Okhsl } from 'culori';
+import debounce from 'just-debounce-it';
+import SearchInput from '@/components/ColorPicker/SearchInput';
+import HSLInputs from '@/components/ColorPicker/HSLInputs';
+import { useSetDocumentStyle } from '@/hooks/use-set-document-style';
+import classes from './component.module.css';
 
 type PropTypes = {
   currentColor: {
     hex: string;
     raw: Okhsl;
+    intergerName: number;
     name: string;
   };
+  cssVariables: Record<string, string>;
 };
 
-export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
+export default function ColorPicker({ currentColor: systemColor, cssVariables }: PropTypes) {
   const [currentColor, setCurrentColor] = useState(systemColor);
-
-  useEffect(() => {
-    if (currentColor !== systemColor) setCurrentColor(systemColor);
-  }, [systemColor]);
-
   const params = useSearchParams();
   const router = useRouter();
 
+  // This makes sure the HSL sliders are updated when the search input is used
+  // there might be a better way to do this
+  useEffect(() => {
+    setCurrentColor((current) => (current !== systemColor ? systemColor : current));
+  }, [systemColor]);
+
+  useSetDocumentStyle(cssVariables);
+
   function updateColor(color: string | { h: number; s: number; l: number }) {
-    if (typeof color === "string") {
+    if (typeof color === 'string') {
       const searchParams = new URLSearchParams(params);
 
-      if (color !== "") searchParams.set("color", color);
-      else searchParams.delete("color");
+      if (color !== '') searchParams.set('color', color);
+      else searchParams.delete('color');
 
-      searchParams.delete("anchor");
+      searchParams.delete('keyIndex');
       router.push(`/?${searchParams}`, { scroll: false });
     } else {
-      const raw: Color = { mode: "okhsl", h: color.h, s: color.s, l: color.l };
+      const raw: Color = { mode: 'okhsl', h: color.h, s: color.s, l: color.l };
       const hex = formatHex(raw);
       const newCurrentColor = { ...systemColor, hex, raw };
       setCurrentColor(newCurrentColor);
@@ -48,23 +54,29 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     () =>
       debounce((hex: string, params: URLSearchParams) => {
         const searchParams = new URLSearchParams(params);
-        console.log(params.forEach((value, key) => console.log(key, value)));
 
-        searchParams.set("color", hex.replace("#", ""));
+        searchParams.set('color', hex.replace('#', ''));
         router.push(`/?${searchParams}`, { scroll: false });
       }, 200),
-    []
+    [router]
   );
 
   const primaryDesaturated = formatHex({
-    mode: "okhsl",
+    mode: 'okhsl',
     h: currentColor.raw.h ?? 0,
     s: 0,
     l: currentColor.raw.l,
   });
 
+  const primarySaturated = formatHex({
+    mode: 'okhsl',
+    h: currentColor.raw.h ?? 0,
+    s: 1,
+    l: currentColor.raw.l,
+  });
+
   const primaryMedium = formatHex({
-    mode: "okhsl",
+    mode: 'okhsl',
     h: currentColor.raw.h ?? 0,
     s: 0.8,
     l: 0.6,
@@ -74,9 +86,10 @@ export default function ColorPicker({ currentColor: systemColor }: PropTypes) {
     <div
       className={classes.wrapper}
       style={{
-        "--color-primary": currentColor.hex,
-        "--color-primary-desaturated": primaryDesaturated,
-        "--color-primary-medium": primaryMedium,
+        '--color-primary': currentColor.hex,
+        '--color-primary-saturated': primarySaturated,
+        '--color-primary-desaturated': primaryDesaturated,
+        '--color-primary-medium': primaryMedium,
       }}
     >
       <p className={classes.label}>
